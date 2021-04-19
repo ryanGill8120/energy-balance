@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="newUser" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewUserController">
+   <children>
+      <Button fx:id="submitBtn" layoutX="531.0" layoutY="590.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="78.0" prefWidth="136.0" text="Submit">
+         <font>
+            <Font size="26.0" />
+         </font></Button>
+   </children>
+</AnchorPane>

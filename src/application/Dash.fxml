@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="dash" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashController">
+   <children>
+      <Button fx:id="logoutBtn" layoutX="256.0" layoutY="60.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="56.0" prefWidth="117.0" text="Log Out">
+         <font>
+            <Font size="22.0" />
+         </font></Button>
+      <Button fx:id="addMealBtn" layoutX="85.0" layoutY="56.0" mnemonicParsing="false" onAction="#toMeal" prefHeight="67.0" prefWidth="118.0" text="Add Meal">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="newFoodBtn" layoutX="429.0" layoutY="65.0" mnemonicParsing="false" onAction="#openNewFood" prefHeight="48.0" prefWidth="140.0" text="Add New Food">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="newWorkoutBtn" layoutX="644.0" layoutY="65.0" mnemonicParsing="false" onAction="#openNewWorkout" text="Add New Workout">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
