@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ public class MealInputController {
     @FXML
     void toDash(ActionEvent event) throws IOException {
     	
-    	AnchorPane pane = FXMLLoader.load(getClass().getResource("Dash.fxml"));
+    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Dash.fxml"));
     	meal.getChildren().setAll(pane);
 
     }

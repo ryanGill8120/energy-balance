@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ public class NewUserController {
     @FXML
     void toLogin(ActionEvent event) throws IOException {
     	
-    	AnchorPane pane = FXMLLoader.load(getClass().getResource("Login.fxml"));
+    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
     	newUser.getChildren().setAll(pane);
 
     }
