@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 
@@ -32,7 +32,7 @@ public class DashController {
     @FXML
     void toLogin(ActionEvent event) throws IOException {
     	
-    	AnchorPane pane = FXMLLoader.load(getClass().getResource("Login.fxml"));
+    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
     	dash.getChildren().setAll(pane);
 
     }
@@ -40,7 +40,7 @@ public class DashController {
     @FXML
     void toMeal(ActionEvent event) throws IOException {
     	
-    	AnchorPane pane = FXMLLoader.load(getClass().getResource("MealInput.fxml"));
+    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/MealInput.fxml"));
     	dash.getChildren().setAll(pane);
 
     }
@@ -49,9 +49,9 @@ public class DashController {
     void openNewFood(ActionEvent event) throws IOException {
     	
     	Stage stage = new Stage();
-    	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("FoodInput.fxml"));
+    	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/FoodInput.fxml"));
 		Scene scene = new Scene(root,800,800);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
 		stage.setTitle("Add New Food");
 		stage.setScene(scene);
 		stage.show();
@@ -62,9 +62,9 @@ public class DashController {
     void openNewWorkout(ActionEvent event) throws IOException {
     	
     	Stage stage = new Stage();
-    	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("WorkoutInput.fxml"));
+    	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/WorkoutInput.fxml"));
 		Scene scene = new Scene(root,800,800);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
 		stage.setTitle("Add New Food");
 		stage.setScene(scene);
 		stage.show();
