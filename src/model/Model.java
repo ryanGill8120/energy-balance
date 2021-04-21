@@ -16,7 +16,7 @@ import application.Workout;
 
 public class Model {
 	
-	//Things we'll need:
+	
 	
 	public static LocalDate today = LocalDate.now();
 	
@@ -69,7 +69,7 @@ public class Model {
 		
 		//iterates through the file and adds values to HashMap
 		for(Object key: authProp.stringPropertyNames()){
-        	auth.put(key.toString(), auth.get(key).toString());
+        	auth.put(key.toString(), authProp.get(key).toString());
         }
 		
 		//loads all users
@@ -85,6 +85,7 @@ public class Model {
 			userMap.put(userName, user);
 		}
 		
+		//loads all food data
 		for(Object key: foodProp.stringPropertyNames()) {
 			String[] foodArr = foodProp.get(key).toString().split(",");
 			String name = foodArr[0];
@@ -94,6 +95,7 @@ public class Model {
 			foodMap.put(name, food);
 		}
 		
+		//loads workouts
 		for(Object key: workoutProp.stringPropertyNames()) {
 			String[] workoutArr = workoutProp.get(key).toString().split(",");
 			String name = workoutArr[0];
@@ -104,6 +106,12 @@ public class Model {
 			Workout workout = new Workout(name, picture, calories, repSize, repName);
 			workoutMap.put(name, workout);
 		}
+		
+		//loads history (NOT SCALABLE) right now the program will load all data from all users into memory 
+		//at launch, we can implement a saving/loading mechanism so that not all of this would be in memory 
+		//for too long. Also, we only need the last year of data for one user, which can be attained from this
+		//file, but will take up way less space in memory. Realistically, this would be handled by a database
+		//framework like SQL
 		
 		for (Object key: historyProp.stringPropertyNames()) {
 			String[] historyArr = historyProp.get(key).toString().split(",");
@@ -131,9 +139,6 @@ public class Model {
 		authProp.store(authWriter, null);
 		
 		userMap.put(user.getUserName(), user);
-		userProp.putAll(userMap);
-		userProp.store(userWriter, null);
-		
 		for (Entry<String, User> entry: userMap.entrySet()) {
     		temp.put(entry.getKey(), entry.getValue().toString());
 		}
@@ -149,7 +154,6 @@ public class Model {
 		
 		FileOutputStream writer = new FileOutputStream(foodFile,true);
 		foodMap.put(food.getName(), food);
-		temp.clear();
 		for (Entry<String, Food> entry: foodMap.entrySet()) {
     		temp.put(entry.getKey(), entry.getValue().toString());
 		}
@@ -167,9 +171,9 @@ public class Model {
 		for (Entry<String, Workout> entry: workoutMap.entrySet()) {
     		temp.put(entry.getKey(), entry.getValue().toString());
 		}
-		foodProp.putAll(temp);
+		workoutProp.putAll(temp);
 		temp.clear();
-		foodProp.store(writer, null);
+		workoutProp.store(writer, null);
 		
 	}
 	
@@ -186,7 +190,10 @@ public class Model {
 		
 	}
 	
-	//file writer functions
+	//search methods
+	
+	
+	
 	
 	//nutrition calculation functions. (BMI, avg. calories/day, projected weight gain/loss, etc.)
 	

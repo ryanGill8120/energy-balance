@@ -1,5 +1,14 @@
 package application;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import model.Model;
+
 public class User {
 	
 	private String userName;
@@ -8,6 +17,7 @@ public class User {
 	private double height;
 	private int age;
 	private String sex;
+	private ArrayList<Day> userHistory = new ArrayList<Day>();
 	
 	public User(String userName, String name, double weight, double height, int age, String sex) {
 		
@@ -18,6 +28,18 @@ public class User {
 		this.age = age;
 		this.sex = sex;
 		
+	}
+	
+	public void populateUserHistory() {
+		LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
+		long numOfDaysBetween = ChronoUnit.DAYS.between(yearAgo, Model.today);
+		List<LocalDate> dateList = new ArrayList<LocalDate>();
+		dateList = IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(i -> yearAgo.plusDays(i)).collect(Collectors.toList());
+		for (LocalDate date: dateList) {
+			if (Model.historyMap.containsKey(userName + "," + date.toString())){
+				userHistory.add(Model.historyMap.get(userName + "," + date.toString()));
+			}
+		}
 	}
 	
 	public String getUserName() {
@@ -88,6 +110,10 @@ public class User {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	
+	public ArrayList<Day> getUserHistory() {
+		return userHistory;
 	}
 
 
