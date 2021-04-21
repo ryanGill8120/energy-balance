@@ -27,11 +27,14 @@ public class Main extends Application {
 			*/
 			
 			Model.loadFiles();
+			
+			/*
 			User testUser = new User("testUser", "John", 90.0, 2.0, 25, "Male");
 			Day testDay = new Day("2020-04-24", "testUser", 2100, 2000, "Potato (x9)", "Run (x5)");
 			Model.addDay(testDay);
 			testUser.populateUserHistory();
 			System.out.println(testUser.getUserHistory());
+			*/
 			
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			Scene scene = new Scene(root,1200,900);
