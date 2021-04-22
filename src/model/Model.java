@@ -31,6 +31,7 @@ public class Model {
 	public static HashMap<String, Workout> workoutMap = new HashMap<String, Workout>();
 	public static HashMap<String, User> userMap = new HashMap<String, User>();
 	public static HashMap<String, Day> historyMap = new HashMap<String, Day>();
+	public static User currentUser;
 	
 	//File reading/writing objects
 	public static Properties authProp = new Properties();
@@ -192,6 +193,26 @@ public class Model {
 	
 	//search methods
 	
+	public boolean authenticate(String username, String password) {
+		if (auth.containsKey(username)) {
+			if (password.equals(auth.get(username))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean queryFood(String name) {
+		if (foodMap.containsKey(name))
+			return true;
+		return false;
+	}
+	
+	public boolean queryWorkout(String name) {
+		if (workoutMap.containsKey(name))
+			return true;
+		return false;
+	}
 	
 	
 	

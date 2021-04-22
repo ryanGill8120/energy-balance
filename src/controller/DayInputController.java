@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-public class MealInputController {
+public class DayInputController {
 	
 	@FXML
 	private AnchorPane meal;

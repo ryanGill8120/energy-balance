@@ -23,8 +23,6 @@ public class DashController {
 	
 	@FXML
     private Button newFoodBtn;
-	
-	
 
     @FXML
     private AnchorPane dash;
@@ -40,7 +38,7 @@ public class DashController {
     @FXML
     void toMeal(ActionEvent event) throws IOException {
     	
-    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/MealInput.fxml"));
+    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/DayInput.fxml"));
     	dash.getChildren().setAll(pane);
 
     }

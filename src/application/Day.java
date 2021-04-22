@@ -14,6 +14,8 @@ public class Day {
 		this.user = user;
 		this.caloriesBurned = caloriesBurned;
 		this.caloriesConsumed = caloriesConsumed;
+		
+		//these two need to change to actual ArrayLists, but must be converted to a CSV string to be stored in the properties file.
 		this.foodList = foodList;
 		this.workoutList = workoutList;
 	}

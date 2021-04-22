@@ -31,6 +31,7 @@ public class User {
 	}
 	
 	public void populateUserHistory() {
+		
 		LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
 		long numOfDaysBetween = ChronoUnit.DAYS.between(yearAgo, Model.today);
 		List<LocalDate> dateList = new ArrayList<LocalDate>();

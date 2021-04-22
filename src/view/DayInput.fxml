@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="meal" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DayInputController">
+   <children>
+      <Button fx:id="backBtn" layoutX="4.0" layoutY="2.0" mnemonicParsing="false" onAction="#toDash" prefHeight="66.0" prefWidth="107.0" text="Back">
+         <font>
+            <Font size="29.0" />
+         </font></Button>
+      <DatePicker layoutX="858.0" layoutY="18.0" prefHeight="54.0" prefWidth="285.0" />
+      <Label layoutX="501.0" layoutY="29.0" text="Date of Current Day">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="512.0" layoutY="124.0" text="Energy Balance number ">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="136.0" layoutY="160.0" prefWidth="150.0" />
+      <ComboBox layoutX="926.0" layoutY="146.0" prefWidth="150.0" />
+      <Separator layoutX="612.0" layoutY="167.0" orientation="VERTICAL" prefHeight="716.0" prefWidth="6.0" />
+      <TextField layoutX="128.0" layoutY="211.0" />
+      <TextField layoutX="937.0" layoutY="197.0" />
+      <Label layoutX="118.0" layoutY="127.0" text="Search Food , choose from List, or add new food type" />
+      <Label layoutX="818.0" layoutY="117.0" text="Search Workout, choose from list, or add new workout type" />
+      <Label layoutX="149.0" layoutY="266.0" text="# Servings" />
+      <Button layoutX="267.0" layoutY="253.0" mnemonicParsing="false" text="Serving +" />
+      <Button layoutX="267.0" layoutY="291.0" mnemonicParsing="false" text="Servings -" />
+      <Label layoutX="935.0" layoutY="258.0" text="Number of Reps" />
+      <Button layoutX="357.0" layoutY="184.0" mnemonicParsing="false" text="Add new Food" />
+      <Button layoutX="770.0" layoutY="172.0" mnemonicParsing="false" text="Add new workout" />
+      <Button layoutX="1092.0" layoutY="240.0" mnemonicParsing="false" text="Rep +" />
+      <Button layoutX="1090.0" layoutY="291.0" mnemonicParsing="false" text="Rep -" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="382.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="707.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="521.0" layoutY="189.0" text="Food Pic" />
+      <Label layoutX="678.0" layoutY="191.0" text="Workout pic" />
+      <Button layoutX="277.0" layoutY="388.0" mnemonicParsing="false" text="Add Food to Day" />
+      <Button layoutX="923.0" layoutY="388.0" mnemonicParsing="false" text="Add Workout to Day" />
+      <ListView layoutX="202.0" layoutY="511.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView layoutX="838.0" layoutY="510.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="467.0" layoutY="442.0" text="Calories Consumed" />
+      <Label layoutX="723.0" layoutY="441.0" text="Calories Burned" />
+      <Label layoutX="289.0" layoutY="476.0" text="Food Eaten list" />
+      <Label layoutX="923.0" layoutY="468.0" text="Workouts Done List" />
+   </children>
+</AnchorPane>
