@@ -1,21 +1,21 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Day {
 	
 	private String date;
 	private String user;
 	private int caloriesConsumed;
 	private int caloriesBurned;
-	private String foodList;
-	private String workoutList;
+	private ArrayList<String> foodList;
+	private ArrayList<String> workoutList;
 	
-	public Day(String date, String user, int caloriesConsumed, int caloriesBurned, String foodList, String workoutList) {
+	public Day(String date, String user, int caloriesConsumed, int caloriesBurned, ArrayList<String> foodList, ArrayList<String> workoutList) {
 		this.date = date;
 		this.user = user;
 		this.caloriesBurned = caloriesBurned;
 		this.caloriesConsumed = caloriesConsumed;
-		
-		//these two need to change to actual ArrayLists, but must be converted to a CSV string to be stored in the properties file.
 		this.foodList = foodList;
 		this.workoutList = workoutList;
 	}
@@ -53,30 +53,46 @@ public class Day {
 		this.caloriesBurned = caloriesBurned;
 	}
 
-	public String getFoodList() {
+	public ArrayList<String> getFoodList() {
 		return foodList;
 	}
 
-	public void setFoodList(String foodList) {
+	public void setFoodList(ArrayList<String> foodList) {
 		this.foodList = foodList;
 	}
 
-	public String getWorkoutList() {
+	public ArrayList<String> getWorkoutList() {
 		return workoutList;
 	}
 
-	public void setWorkoutList(String workoutList) {
+	public void setWorkoutList(ArrayList<String> workoutList) {
 		this.workoutList = workoutList;
 	}
 
 	public int getEnergyBalance() {
 		return (int)((double)caloriesConsumed/caloriesBurned - 1) * 100;
 	}
+	
+	public String getFoodListString() {
+		String output = "";
+		for (int i = 0; i < foodList.size(); i++) {
+			output += foodList.get(i) + "-";
+		}
+		return output;
+	}
+	
+	public String getWorkoutListString() {
+		String output = "";
+		for (int i = 0; i < workoutList.size(); i++) {
+			output += workoutList.get(i) + "-";
+		}
+		return output;
+	}
 
 	@Override
 	public String toString() {
 		return date + "," + user + "," + caloriesConsumed + "," + caloriesBurned + "," + 
-				foodList + "," + workoutList;
+				getFoodListString() + "," + getWorkoutListString();
 	}
 	
 	

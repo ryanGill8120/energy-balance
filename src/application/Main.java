@@ -27,7 +27,7 @@ public class Main extends Application {
 			*/
 			
 			Model.loadFiles();
-			
+			System.out.println(Model.userMap);
 			/*
 			User testUser = new User("testUser", "John", 90.0, 2.0, 25, "Male");
 			Day testDay = new Day("2020-04-24", "testUser", 2100, 2000, "Potato (x9)", "Run (x5)");

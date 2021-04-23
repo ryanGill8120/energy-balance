@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -80,9 +81,9 @@ public class Model {
 			String name = userArr[1];
 			double weight = (double)Double.parseDouble(userArr[2]);
 			double height = (double)Double.parseDouble(userArr[3]);
-			int age = (int)Integer.parseInt(userArr[4]);
+			LocalDate birthday = LocalDate.parse(userArr[4]);
 			String sex = userArr[5];
-			User user = new User(userName, name, weight, height, age, sex);
+			User user = new User(userName, name, weight, height, birthday, sex);
 			userMap.put(userName, user);
 		}
 		
@@ -122,7 +123,17 @@ public class Model {
 			int caloriesBurned = (int)Integer.parseInt(historyArr[3]);
 			String foodList = historyArr[4];
 			String workoutList = historyArr[5];
-			Day day = new Day(date, user, caloriesConsumed, caloriesBurned, foodList, workoutList);
+			String[] foodArr = foodList.split("-");
+			String[] workoutArr = workoutList.split("-");
+			ArrayList<String> foodAList = new ArrayList<String>();
+			ArrayList<String> workoutAList = new ArrayList<String>();
+			for (String f: foodArr) {
+				foodAList.add(f);
+			}
+			for (String w: workoutArr) {
+				workoutAList.add(w);
+			}
+			Day day = new Day(date, user, caloriesConsumed, caloriesBurned, foodAList, workoutAList);
 			historyMap.put(key.toString(), day);
 			
 		}

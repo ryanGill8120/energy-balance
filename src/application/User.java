@@ -15,17 +15,17 @@ public class User {
 	private String name;
 	private double weight;
 	private double height;
-	private int age;
+	private LocalDate birthday;
 	private String sex;
 	private ArrayList<Day> userHistory = new ArrayList<Day>();
 	
-	public User(String userName, String name, double weight, double height, int age, String sex) {
+	public User(String userName, String name, double weight, double height, LocalDate birthday, String sex) {
 		
 		this.userName = userName;
 		this.name = name;
 		this.weight = weight;
 		this.height = height;
-		this.age = age;
+		this.birthday = birthday;
 		this.sex = sex;
 		
 	}
@@ -91,14 +91,14 @@ public class User {
 
 
 
-	public int getAge() {
-		return age;
+	public LocalDate getBirthday() {
+		return birthday;
 	}
 
 
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 
 
@@ -121,7 +121,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return userName + "," + name + "," + weight + "," + height + "," + age + "," + sex;
+		return userName + "," + name + "," + weight + "," + height + "," + birthday.toString() + "," + sex;
 	}
 	
 	
