@@ -1,1 +1,10 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#root{ 
+	-fx-background-color: #C6FFDD;  /* fallback for old browsers */
+	-fx-background-color: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+ 
+#loginBtn, #signUpBtn{
+	-fx-background-color: "#2196F3", "rgba(255, 255, 255, 0.45)";
+}
