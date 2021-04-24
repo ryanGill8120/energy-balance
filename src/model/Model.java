@@ -144,8 +144,8 @@ public class Model {
 	//add user
 	public static void addUser(User user, String password) throws IOException {
 		
-		FileOutputStream userWriter = new FileOutputStream(userFile,true);
-		FileOutputStream authWriter = new FileOutputStream(authFile,true);
+		FileOutputStream userWriter = new FileOutputStream(userFile,false);
+		FileOutputStream authWriter = new FileOutputStream(authFile,false);
 		auth.put(user.getUserName(), password);
 		authProp.putAll(auth);
 		authProp.store(authWriter, null);
@@ -164,7 +164,7 @@ public class Model {
 	//add food
 	public static void addFood(Food food) throws IOException {
 		
-		FileOutputStream writer = new FileOutputStream(foodFile,true);
+		FileOutputStream writer = new FileOutputStream(foodFile,false);
 		foodMap.put(food.getName(), food);
 		for (Entry<String, Food> entry: foodMap.entrySet()) {
     		temp.put(entry.getKey(), entry.getValue().toString());
@@ -178,7 +178,7 @@ public class Model {
 	//add workout
 	public static void addWorkout(Workout workout) throws IOException {
 		
-		FileOutputStream writer = new FileOutputStream(workoutFile,true);
+		FileOutputStream writer = new FileOutputStream(workoutFile,false);
 		workoutMap.put(workout.getName(), workout);
 		for (Entry<String, Workout> entry: workoutMap.entrySet()) {
     		temp.put(entry.getKey(), entry.getValue().toString());
@@ -191,7 +191,7 @@ public class Model {
 	
 	public static void addDay(Day day) throws IOException {
 		
-		FileOutputStream writer = new FileOutputStream(historyFile, true);
+		FileOutputStream writer = new FileOutputStream(historyFile, false);
 		historyMap.put((day.getUser() + "," + day.getDate()), day);
 		for (Entry<String, Day> entry: historyMap.entrySet()) {
 			temp.put(entry.getKey(), entry.getValue().toString());
@@ -204,7 +204,7 @@ public class Model {
 	
 	//search methods
 	
-	public boolean authenticate(String username, String password) {
+	public static boolean authenticate(String username, String password) {
 		if (auth.containsKey(username)) {
 			if (password.equals(auth.get(username))) {
 				return true;

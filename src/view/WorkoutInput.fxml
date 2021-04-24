@@ -6,13 +6,41 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane fx:id="workoutInput" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkoutInputController">
    <children>
-      <Label layoutX="289.0" layoutY="190.0" text="Workout input screen">
+      <Label layoutX="289.0" layoutY="74.0" text="Workout input screen">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
+      <Label layoutX="128.0" layoutY="149.0" text="Workout Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="535.0" layoutY="152.0" text="Name of Repetition">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="332.0" text="Calories burned per repetition">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="477.0" layoutY="331.0" text="Number of repetitions per workout">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameTF" layoutX="105.0" layoutY="203.0" />
+      <TextField fx:id="repTF" layoutX="527.0" layoutY="203.0" />
+      <TextField fx:id="calTF" layoutX="105.0" layoutY="387.0" />
+      <TextField fx:id="repTF" layoutX="527.0" layoutY="387.0" />
+      <Button fx:id="submitBtn" layoutX="349.0" layoutY="541.0" mnemonicParsing="false" onAction="#process" text="Submit">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
