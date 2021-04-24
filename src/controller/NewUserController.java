@@ -166,7 +166,7 @@ public class NewUserController implements Initializable{
 		
 		LocalDate birthday = LocalDate.of((int)yearCB.getValue(), month, (int)dayCB.getValue());
 		String sex = sexCB.getValue();
-		User user = new User(userName, name, weight, height, birthday, sex);
+		User user = new User(userName, name, weight, height, birthday, Model.today, sex);
 		Model.addUser(user, password);
 		statusLabel.setText("User: " + userName + " has been added!");
 		

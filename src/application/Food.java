@@ -4,17 +4,19 @@ public class Food {
 	
 	private String name;
 	private String picture;
+	private String servingSize;
 	private int calories; //per serving
 	
-	public Food(String name, String picture, int calories) {
+	public Food(String name, String picture, String servingSize, int calories) {
 		this.name = name;
 		this.picture = picture;
+		this.servingSize = servingSize;
 		this.calories = calories;
 	}
 	
 	@Override
 	public String toString() {
-		return name + "," + picture + "," + calories;
+		return name + "," + picture + "," + servingSize + "," + calories;
 	}
 	
 	public String getName() {

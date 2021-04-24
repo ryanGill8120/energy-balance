@@ -18,17 +18,23 @@
             <Font size="21.0" />
          </font>
       </Button>
-      <Label layoutX="338.0" layoutY="270.0" text="Food Name">
+      <Label layoutX="342.0" layoutY="243.0" text="Food Name">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="306.0" layoutY="384.0" text="Calories per Serving">
+      <Label layoutX="308.0" layoutY="408.0" text="Calories per Serving">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="nameTF" layoutX="320.0" layoutY="325.0" />
+      <TextField fx:id="nameTF" layoutX="320.0" layoutY="280.0" />
       <TextField fx:id="calTF" layoutX="320.0" layoutY="449.0" />
+      <Label layoutX="336.0" layoutY="322.0" text="Serving Size">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="servingSizeTF" layoutX="321.0" layoutY="367.0" />
    </children>
 </AnchorPane>

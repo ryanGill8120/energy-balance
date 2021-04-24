@@ -13,43 +13,66 @@
          <font>
             <Font size="29.0" />
          </font></Button>
-      <DatePicker layoutX="858.0" layoutY="18.0" prefHeight="54.0" prefWidth="285.0" />
-      <Label layoutX="501.0" layoutY="29.0" text="Date of Current Day">
+      <DatePicker fx:id="datePicker" layoutX="858.0" layoutY="18.0" onAction="#setDate" prefHeight="54.0" prefWidth="285.0" />
+      <Label fx:id="currentDateLbl" layoutX="501.0" layoutY="29.0" text="Date of Current Day">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="512.0" layoutY="124.0" text="Energy Balance number ">
+      <Label fx:id="energyLbl" layoutX="512.0" layoutY="124.0" text="Energy Balance number ">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <ComboBox layoutX="136.0" layoutY="160.0" prefWidth="150.0" />
-      <ComboBox layoutX="926.0" layoutY="146.0" prefWidth="150.0" />
+      <ComboBox fx:id="chooseFoodCB" layoutX="78.0" layoutY="163.0" onAction="#chooseFood" prefWidth="150.0" />
+      <ComboBox fx:id="chooseWorkoutCB" layoutX="986.0" layoutY="150.0" onAction="#chooseWorkout" prefWidth="150.0" />
       <Separator layoutX="612.0" layoutY="167.0" orientation="VERTICAL" prefHeight="716.0" prefWidth="6.0" />
-      <TextField layoutX="128.0" layoutY="211.0" />
-      <TextField layoutX="937.0" layoutY="197.0" />
+      <TextField fx:id="searchFoodTF" layoutX="77.0" layoutY="209.0" />
+      <TextField fx:id="searchWorkoutTF" layoutX="973.0" layoutY="196.0" />
       <Label layoutX="118.0" layoutY="127.0" text="Search Food , choose from List, or add new food type" />
       <Label layoutX="818.0" layoutY="117.0" text="Search Workout, choose from list, or add new workout type" />
-      <Label layoutX="149.0" layoutY="266.0" text="# Servings" />
-      <Button layoutX="267.0" layoutY="253.0" mnemonicParsing="false" text="Serving +" />
-      <Button layoutX="267.0" layoutY="291.0" mnemonicParsing="false" text="Servings -" />
-      <Label layoutX="935.0" layoutY="258.0" text="Number of Reps" />
-      <Button layoutX="357.0" layoutY="184.0" mnemonicParsing="false" text="Add new Food" />
-      <Button layoutX="770.0" layoutY="172.0" mnemonicParsing="false" text="Add new workout" />
-      <Button layoutX="1092.0" layoutY="240.0" mnemonicParsing="false" text="Rep +" />
-      <Button layoutX="1090.0" layoutY="291.0" mnemonicParsing="false" text="Rep -" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="382.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="707.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="521.0" layoutY="189.0" text="Food Pic" />
-      <Label layoutX="678.0" layoutY="191.0" text="Workout pic" />
-      <Button layoutX="277.0" layoutY="388.0" mnemonicParsing="false" text="Add Food to Day" />
-      <Button layoutX="923.0" layoutY="388.0" mnemonicParsing="false" text="Add Workout to Day" />
-      <ListView layoutX="202.0" layoutY="511.0" prefHeight="200.0" prefWidth="200.0" />
-      <ListView layoutX="838.0" layoutY="510.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="467.0" layoutY="442.0" text="Calories Consumed" />
-      <Label layoutX="723.0" layoutY="441.0" text="Calories Burned" />
-      <Label layoutX="289.0" layoutY="476.0" text="Food Eaten list" />
-      <Label layoutX="923.0" layoutY="468.0" text="Workouts Done List" />
+      <Label layoutX="161.0" layoutY="404.0" text="# Servings" />
+      <Button fx:id="servingPlusBtn" layoutX="44.0" layoutY="386.0" mnemonicParsing="false" onAction="#servingPlus" text="Serving +" />
+      <Button fx:id="servingMinusBtn" layoutX="51.0" layoutY="434.0" mnemonicParsing="false" onAction="#servingMinus" text="Servings -" />
+      <Label layoutX="975.0" layoutY="413.0" text="Number of Reps" />
+      <Button fx:id="newFoodBtn" layoutX="267.0" layoutY="160.0" mnemonicParsing="false" onAction="#openFood" text="Add new Food" />
+      <Button fx:id="newWorkoutBtn" layoutX="808.0" layoutY="148.0" mnemonicParsing="false" onAction="#openWorkout" text="Add new workout" />
+      <Button fx:id="repPlusBtn" layoutX="1094.0" layoutY="393.0" mnemonicParsing="false" onAction="#repPlus" text="Rep +" />
+      <Button fx:id="repMinusBtn" layoutX="1094.0" layoutY="438.0" mnemonicParsing="false" onAction="#repMinus" text="Rep -" />
+      <ImageView fx:id="foodImage" fitHeight="150.0" fitWidth="200.0" layoutX="383.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="workoutImage" fitHeight="150.0" fitWidth="200.0" layoutX="659.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="foodNameLbl" layoutX="477.0" layoutY="189.0" text="Food Pic" />
+      <Label fx:id="workoutNameLbl" layoutX="679.0" layoutY="189.0" text="Workout pic" />
+      <Button fx:id="addFoodToDayBtn" layoutX="294.0" layoutY="469.0" mnemonicParsing="false" onAction="#addFoodToDay" text="Add Food to Day" />
+      <Button fx:id="addWorkoutToDayBtn" layoutX="795.0" layoutY="471.0" mnemonicParsing="false" onAction="#addWorkoutToDay" text="Add Workout to Day" />
+      <ListView fx:id="foodEaten" layoutX="46.0" layoutY="503.0" prefHeight="200.0" prefWidth="355.0" />
+      <ListView fx:id="workoutsDone" layoutX="812.0" layoutY="510.0" prefHeight="200.0" prefWidth="336.0" />
+      <Label layoutX="452.0" layoutY="641.0" text="Total Calories Consumed" />
+      <Label layoutX="652.0" layoutY="516.0" text="Workout Calories Burned" />
+      <Label layoutX="185.0" layoutY="476.0" text="Food Eaten list" />
+      <Label layoutX="925.0" layoutY="473.0" text="Workouts Done List" />
+      <Button fx:id="searchFoodBtn" layoutX="271.0" layoutY="212.0" mnemonicParsing="false" onAction="#searchFood" text="Search Food" />
+      <Button fx:id="searchWorkoutBtn" layoutX="809.0" layoutY="195.0" mnemonicParsing="false" onAction="#searchWorkout" text="Search Workout" />
+      <Label fx:id="calConsumedLbl" layoutX="278.0" layoutY="403.0" text="Calories Consumed for this meal" />
+      <Label fx:id="calBurnedLbl" layoutX="728.0" layoutY="414.0" text="Calories Burned for this workout" />
+      <Label fx:id="servingNumberLbl" layoutX="175.0" layoutY="439.0" text="Label" />
+      <Label fx:id="calConsumedAmount" layoutX="334.0" layoutY="439.0" text="Label" />
+      <Label fx:id="calBurnedAmount" layoutX="845.0" layoutY="442.0" text="Label" />
+      <Label fx:id="repNumberLbl" layoutX="1003.0" layoutY="439.0" text="Label" />
+      <Label fx:id="calPerServingLbl" layoutX="155.0" layoutY="254.0" prefHeight="30.0" prefWidth="124.0" text="Calories per Serving:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="666.0" layoutY="581.0" text="Basal Metabolism" />
+      <Button fx:id="basalBtn" layoutX="780.0" layoutY="575.0" mnemonicParsing="false" onAction="#getBaslAlert" text="?" />
+      <Label layoutX="658.0" layoutY="649.0" text="Total Calories Burned" />
+      <Label fx:id="totalCalConsumed" layoutX="509.0" layoutY="695.0" text="Label" />
+      <Label fx:id="workoutCalsLbl" layoutX="706.0" layoutY="543.0" text="Label" />
+      <Label fx:id="basalLbl" layoutX="706.0" layoutY="617.0" text="Label" />
+      <Label fx:id="totalCalBurned" layoutX="706.0" layoutY="695.0" text="Label" />
+      <Label fx:id="calPerServingAmount" layoutX="206.0" layoutY="288.0" text="Label" />
+      <Label fx:id="calBurnedPerServingLbl" layoutX="938.0" layoutY="261.0" text="Calories Burned per rep" />
+      <Label fx:id="calBurnedPerRepAmount" layoutX="988.0" layoutY="311.0" text="Label" />
    </children>
 </AnchorPane>

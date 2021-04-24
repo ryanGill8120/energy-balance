@@ -16,16 +16,18 @@ public class User {
 	private double weight;
 	private double height;
 	private LocalDate birthday;
+	private LocalDate lastWeighIn;
 	private String sex;
 	private ArrayList<Day> userHistory = new ArrayList<Day>();
 	
-	public User(String userName, String name, double weight, double height, LocalDate birthday, String sex) {
+	public User(String userName, String name, double weight, double height, LocalDate birthday, LocalDate lastWeighIn, String sex) {
 		
 		this.userName = userName;
 		this.name = name;
 		this.weight = weight;
 		this.height = height;
 		this.birthday = birthday;
+		this.lastWeighIn = lastWeighIn;
 		this.sex = sex;
 		
 	}
@@ -121,7 +123,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return userName + "," + name + "," + weight + "," + height + "," + birthday.toString() + "," + sex;
+		return userName + "," + name + "," + weight + "," + height + "," + birthday.toString() + "," + lastWeighIn.toString()+ "," + sex;
 	}
 	
 	

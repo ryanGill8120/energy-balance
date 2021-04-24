@@ -17,6 +17,9 @@ public class FoodInputController {
 
     @FXML
     private TextField nameTF;
+    
+    @FXML
+    private TextField servingSizeTF;
 
     @FXML
     private Button submitBtn;
@@ -26,8 +29,9 @@ public class FoodInputController {
     	
     	String name = nameTF.getText();
     	String pic = nameTF.getText() + ".jpg";
+    	String servingSize = servingSizeTF.getText();
     	int calories = Integer.parseInt(calTF.getText());
-    	Food food = new Food(name, pic, calories);
+    	Food food = new Food(name, pic, servingSize, calories);
     	Model.addFood(food);
 
     } 

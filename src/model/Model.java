@@ -82,8 +82,9 @@ public class Model {
 			double weight = (double)Double.parseDouble(userArr[2]);
 			double height = (double)Double.parseDouble(userArr[3]);
 			LocalDate birthday = LocalDate.parse(userArr[4]);
-			String sex = userArr[5];
-			User user = new User(userName, name, weight, height, birthday, sex);
+			LocalDate lastWeighIn = LocalDate.parse(userArr[5]);
+			String sex = userArr[6];
+			User user = new User(userName, name, weight, height, birthday, lastWeighIn, sex);
 			userMap.put(userName, user);
 		}
 		
@@ -92,8 +93,9 @@ public class Model {
 			String[] foodArr = foodProp.get(key).toString().split(",");
 			String name = foodArr[0];
 			String picture = foodArr[1];
-			int calories = (int)Integer.parseInt(foodArr[2]);
-			Food food = new Food(name, picture, calories);
+			String servingSize = foodArr[3];
+			int calories = (int)Integer.parseInt(foodArr[3]);
+			Food food = new Food(name, picture, servingSize, calories);
 			foodMap.put(name, food);
 		}
 		

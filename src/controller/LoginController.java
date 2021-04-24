@@ -34,6 +34,7 @@ public class LoginController {
     void toDash(ActionEvent event) throws IOException {
     	
     	if (Model.authenticate(userTF.getText(), pwField.getText())) {
+    		Model.currentUser = Model.userMap.get(userTF.getText());
     		AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Dash.fxml"));
     		root.getChildren().setAll(pane);
     	}else {
