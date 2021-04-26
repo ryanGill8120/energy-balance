@@ -32,7 +32,11 @@ public class Model {
 	public static HashMap<String, Workout> workoutMap = new HashMap<String, Workout>();
 	public static HashMap<String, User> userMap = new HashMap<String, User>();
 	public static HashMap<String, Day> historyMap = new HashMap<String, Day>();
+	public static HashMap<String, String> foodHistoryMap = new HashMap<String, String>();
+	public static HashMap<String, String> workoutHistoryMap = new HashMap<String, String>();
+	
 	public static User currentUser;
+	public static LocalDate currentDate;
 	
 	//File reading/writing objects
 	public static Properties authProp = new Properties();
@@ -40,12 +44,16 @@ public class Model {
 	public static Properties workoutProp = new Properties();
 	public static Properties userProp = new Properties();
 	public static Properties historyProp = new Properties();
+	public static Properties foodHistoryProp = new Properties();
+	public static Properties workoutHistoryProp = new Properties();
+	
 	public static File authFile = new File("auth.properties");
 	public static File foodFile = new File("food.properties");
 	public static File workoutFile = new File("workout.properties");
 	public static File userFile = new File("users.properties");
 	public static File historyFile = new File("history.properties");
-	
+	public static File foodHistoryFile = new File("foodHistory.properties");
+	public static File workoutHistoryFile = new File("workoutHistory.properties");
 	
 	//start-up file loader function()
 	public static void loadFiles() throws IOException{
@@ -56,18 +64,24 @@ public class Model {
 		FileInputStream workoutReader = new FileInputStream(workoutFile);
 		FileInputStream foodReader = new FileInputStream(foodFile);
 		FileInputStream historyReader = new FileInputStream(historyFile);
+		FileInputStream foodHistoryReader = new FileInputStream(foodHistoryFile);
+		FileInputStream workoutHistoryReader = new FileInputStream(workoutHistoryFile);
 		
 		authProp.load(authReader);
 		userProp.load(userReader);
 		workoutProp.load(workoutReader);
 		foodProp.load(foodReader);
 		historyProp.load(historyReader);
+		foodHistoryProp.load(foodHistoryReader);
+		workoutHistoryProp.load(workoutHistoryReader);
 		
 		authReader.close();
 		userReader.close();
 		workoutReader.close();
 		foodReader.close();
 		historyReader.close();
+		foodHistoryReader.close();
+		workoutHistoryReader.close();
 		
 		//iterates through the file and adds values to HashMap
 		for(Object key: authProp.stringPropertyNames()){
@@ -93,7 +107,7 @@ public class Model {
 			String[] foodArr = foodProp.get(key).toString().split(",");
 			String name = foodArr[0];
 			String picture = foodArr[1];
-			String servingSize = foodArr[3];
+			String servingSize = foodArr[2];
 			int calories = (int)Integer.parseInt(foodArr[3]);
 			Food food = new Food(name, picture, servingSize, calories);
 			foodMap.put(name, food);
@@ -123,22 +137,20 @@ public class Model {
 			String user = historyArr[1];
 			int caloriesConsumed = (int)Integer.parseInt(historyArr[2]);
 			int caloriesBurned = (int)Integer.parseInt(historyArr[3]);
-			String foodList = historyArr[4];
-			String workoutList = historyArr[5];
-			String[] foodArr = foodList.split("-");
-			String[] workoutArr = workoutList.split("-");
-			ArrayList<String> foodAList = new ArrayList<String>();
-			ArrayList<String> workoutAList = new ArrayList<String>();
-			for (String f: foodArr) {
-				foodAList.add(f);
-			}
-			for (String w: workoutArr) {
-				workoutAList.add(w);
-			}
-			Day day = new Day(date, user, caloriesConsumed, caloriesBurned, foodAList, workoutAList);
+			Day day = new Day(date, user, caloriesConsumed, caloriesBurned);
 			historyMap.put(key.toString(), day);
 			
 		}
+		
+		for (Object key: foodHistoryProp.stringPropertyNames()) {
+			foodHistoryMap.put(key.toString(), foodHistoryProp.get(key).toString());
+		}
+		
+		for (Object key: workoutHistoryProp.stringPropertyNames()) {
+			workoutHistoryMap.put(key.toString(), workoutHistoryProp.get(key).toString());
+		}
+		
+		
 	}
 	
 	//adder functions for all data structures
@@ -204,6 +216,24 @@ public class Model {
 		
 	}
 	
+	public static void addFoodHistory(Day day, String foodHistoryString) throws IOException{
+		
+		FileOutputStream writer = new FileOutputStream(foodHistoryFile, false);
+		foodHistoryMap.put((day.getUser() + "," + day.getDate()), foodHistoryString);
+		foodHistoryProp.putAll(foodHistoryMap);
+		foodHistoryProp.store(writer, null);
+	}
+	
+	public static void addWorkoutHistory(Day day, String workoutHistoryString) throws IOException{
+		
+		FileOutputStream writer = new FileOutputStream(workoutHistoryFile, false);
+		workoutHistoryMap.put((day.getUser() + "," + day.getDate()), workoutHistoryString);
+		workoutHistoryProp.putAll(workoutHistoryMap);
+		workoutHistoryProp.store(writer, null);
+	}
+	
+	
+	
 	//search methods
 	
 	public static boolean authenticate(String username, String password) {
@@ -215,13 +245,13 @@ public class Model {
 		return false;
 	}
 	
-	public boolean queryFood(String name) {
+	public static boolean queryFood(String name) {
 		if (foodMap.containsKey(name))
 			return true;
 		return false;
 	}
 	
-	public boolean queryWorkout(String name) {
+	public static boolean queryWorkout(String name) {
 		if (workoutMap.containsKey(name))
 			return true;
 		return false;

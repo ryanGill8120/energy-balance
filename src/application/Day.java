@@ -8,16 +8,14 @@ public class Day {
 	private String user;
 	private int caloriesConsumed;
 	private int caloriesBurned;
-	private ArrayList<String> foodList;
-	private ArrayList<String> workoutList;
+
 	
-	public Day(String date, String user, int caloriesConsumed, int caloriesBurned, ArrayList<String> foodList, ArrayList<String> workoutList) {
+	public Day(String date, String user, int caloriesConsumed, int caloriesBurned) {
 		this.date = date;
 		this.user = user;
 		this.caloriesBurned = caloriesBurned;
 		this.caloriesConsumed = caloriesConsumed;
-		this.foodList = foodList;
-		this.workoutList = workoutList;
+		
 	}
 	
 	
@@ -53,46 +51,20 @@ public class Day {
 		this.caloriesBurned = caloriesBurned;
 	}
 
-	public ArrayList<String> getFoodList() {
-		return foodList;
-	}
+	
 
-	public void setFoodList(ArrayList<String> foodList) {
-		this.foodList = foodList;
-	}
-
-	public ArrayList<String> getWorkoutList() {
-		return workoutList;
-	}
-
-	public void setWorkoutList(ArrayList<String> workoutList) {
-		this.workoutList = workoutList;
-	}
+	
 
 	public int getEnergyBalance() {
-		return (int)((double)caloriesConsumed/caloriesBurned - 1) * 100;
+		double ebDouble = (((double)caloriesConsumed/caloriesBurned) - 1) * 100;
+		return (int)ebDouble;
 	}
 	
-	public String getFoodListString() {
-		String output = "";
-		for (int i = 0; i < foodList.size(); i++) {
-			output += foodList.get(i) + "-";
-		}
-		return output;
-	}
 	
-	public String getWorkoutListString() {
-		String output = "";
-		for (int i = 0; i < workoutList.size(); i++) {
-			output += workoutList.get(i) + "-";
-		}
-		return output;
-	}
 
 	@Override
 	public String toString() {
-		return date + "," + user + "," + caloriesConsumed + "," + caloriesBurned + "," + 
-				getFoodListString() + "," + getWorkoutListString();
+		return date + "," + user + "," + caloriesConsumed + "," + caloriesBurned;
 	}
 	
 	

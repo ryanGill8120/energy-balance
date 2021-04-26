@@ -23,6 +23,9 @@ public class WorkoutInputController {
 
     @FXML
     private TextField repTF;
+    
+    @FXML
+    private TextField repNameTF;
 
     @FXML
     private AnchorPane workoutInput;
@@ -32,7 +35,7 @@ public class WorkoutInputController {
     	
     	String name = nameTF.getText();
     	String pic = name + ".jpg";
-    	String repName = repTF.getText();
+    	String repName = repNameTF.getText();
     	int calories = (int)Integer.parseInt(calTF.getText());
     	int reps = (int)Integer.parseInt(repTF.getText());
     	Workout workout = new Workout(name, pic, calories, reps, repName);

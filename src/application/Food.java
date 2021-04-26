@@ -34,6 +34,17 @@ public class Food {
 	public int getCalories() {
 		return calories;
 	}
+	
+	
+	
+	public String getServingSize() {
+		return servingSize;
+	}
+
+	public void setServingSize(String servingSize) {
+		this.servingSize = servingSize;
+	}
+
 	public void setCalories(int calories) {
 		this.calories = calories;
 	}
