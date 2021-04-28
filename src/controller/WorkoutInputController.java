@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +25,7 @@ import model.Model;
 
 public class WorkoutInputController implements Initializable{
 	
-	private Desktop desktop = Desktop.getDesktop();
+//	private Desktop desktop = Desktop.getDesktop();
 	private BufferedImage buffImage;
 	
 	@FXML
@@ -105,7 +104,6 @@ public class WorkoutInputController implements Initializable{
     			workoutImageView.setImage(img);
     			
     		} catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
     		a.show();
@@ -144,7 +142,6 @@ public class WorkoutInputController implements Initializable{
 			workoutImageView.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

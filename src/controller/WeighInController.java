@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Model;
 
 public class WeighInController implements Initializable{
@@ -35,13 +36,14 @@ public class WeighInController implements Initializable{
     		Model.currentUser.setLastWeighIn(Model.today);
     		String pw = Model.auth.get(Model.currentUser.getUserName());
     		Model.addUser(Model.currentUser, pw);
-    		a.setHeaderText("Weigh In successful");
-    		a.setContentText("You may return to the previous screen");
-    		weightTF.clear();
-    	}else {
+    		a.setHeaderText("Weigh-In Successful");
+    		a.setContentText("Your current weight of "+weight+" lbs was added!");
+    		Stage stage = (Stage) weightTF.getScene().getWindow();
+    	    stage.close();
+    	} else {
     		a.setAlertType(AlertType.ERROR);
     		a.setHeaderText("Invalid Input");
-    		a.setContentText("Weight must be an integer");
+    		a.setContentText("Weight must be an integer!");
     	}
     	a.show();
     	
@@ -51,7 +53,7 @@ public class WeighInController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
-		promptLbl.setText("Enter your weight as of " + formattedDate);
+		promptLbl.setText("Enter your weight as of " + formattedDate + ":");
 		
 	}
 

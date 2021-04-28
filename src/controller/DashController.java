@@ -321,7 +321,7 @@ public class DashController implements Initializable{
     	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/WeighIn.fxml"));
 		Scene scene = new Scene(root,600,600);
 		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
-		stage.setTitle("Weigh IN");
+		stage.setTitle("Weigh-In");
 		stage.setScene(scene);
 		stage.show();
 
@@ -361,7 +361,7 @@ public class DashController implements Initializable{
         	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/WeighIn.fxml"));
     		Scene scene = new Scene(root,600,600);
     		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
-    		stage.setTitle("Weigh IN");
+    		stage.setTitle("Weigh-In");
     		stage.setScene(scene);
     		stage.show();
         	}catch(IOException e) {

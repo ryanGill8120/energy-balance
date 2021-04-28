@@ -21,180 +21,179 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.Model;
 
-public class NewUserController implements Initializable{
-	
+public class NewUserController implements Initializable {
+
 	@FXML
-    private ChoiceBox<Integer> feetCB;
-	Integer[] feet = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	private ChoiceBox<Integer> feetCB;
+	Integer[] feet = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-    @FXML
-    private ChoiceBox<String> sexCB;
-    String[] sexes = {"Female", "Male"};
+	@FXML
+	private ChoiceBox<String> sexCB;
+	String[] sexes = { "Female", "Male" };
 
-    @FXML
-    private TextField nameTF;
-    
-    @FXML
-    private Label statusLabel;
+	@FXML
+	private TextField nameTF;
 
-    @FXML
-    private TextField usernameTF;
+	@FXML
+	private Label statusLabel;
 
-    @FXML
-    private Button submitBtn;
-    
-    @FXML
-    private Button backBtn;
+	@FXML
+	private TextField usernameTF;
 
-    @FXML
-    private PasswordField firstPW;
+	@FXML
+	private Button submitBtn;
 
-    @FXML
-    private ChoiceBox<Integer> dayCB;
-    
-    @FXML
-    private TextField weightTF;
+	@FXML
+	private Button backBtn;
 
-    @FXML
-    private ChoiceBox<Integer> inchesCB;
-    Integer[] inches = {0,1,2,3,4,5,6,7,8,9,10,11};
+	@FXML
+	private PasswordField firstPW;
 
-    @FXML
-    private AnchorPane newUser;
+	@FXML
+	private ChoiceBox<Integer> dayCB;
 
-    @FXML
-    private PasswordField secondPW;
+	@FXML
+	private TextField weightTF;
 
-    @FXML
-    private ChoiceBox<String> monthCB;
-    String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	@FXML
+	private ChoiceBox<Integer> inchesCB;
+	Integer[] inches = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
-    @FXML
-    private ChoiceBox<Integer> yearCB;
-	
+	@FXML
+	private AnchorPane newUser;
 
-    @FXML
-    void toLogin(ActionEvent event) throws IOException {
-    	
-    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-    	newUser.getChildren().setAll(pane);
+	@FXML
+	private PasswordField secondPW;
 
-    }
+	@FXML
+	private ChoiceBox<String> monthCB;
+	String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+			"October", "November", "December" };
 
+	@FXML
+	private ChoiceBox<Integer> yearCB;
+
+	@FXML
+	void toLogin(ActionEvent event) throws IOException {
+
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+		newUser.getChildren().setAll(pane);
+
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		feetCB.getItems().setAll(feet);
 		sexCB.getItems().setAll(sexes);
 		dayCB.getItems().setAll(populateDays());
 		inchesCB.getItems().setAll(inches);
 		monthCB.getItems().setAll(months);
 		yearCB.getItems().setAll(populateYears());
-		
+
 	}
-	
+
 	public Integer[] populateDays() {
 		Integer[] days = new Integer[31];
-		for (int i =0; i<31; i++) {
+		for (int i = 0; i < 31; i++) {
 			days[i] = (Integer) i + 1;
 		}
 		return days;
-		
+
 	}
-	
+
 	public Integer[] populateYears() {
 		Integer[] years = new Integer[100];
-		Integer thisYear = (Integer)Model.today.getYear(); 
+		Integer thisYear = (Integer) Model.today.getYear();
 		for (int i = 0; i < 100; i++) {
-			years[i] = thisYear - (Integer)i;
+			years[i] = thisYear - (Integer) i;
 		}
 		return years;
 	}
-	
-	public boolean validatePassword(String pw1, String pw2) {
-		if(pw1.equals(pw2))
-			return true;
-		return false;
-	}
-	
+
 	@FXML
 	public void processUser() throws IOException {
-		
+
 		Alert a = new Alert(AlertType.CONFIRMATION);
 		String name = nameTF.getText();
-		String userName = usernameTF.getText();
+		String username = usernameTF.getText();
 		String firstPWString = firstPW.getText();
 		String secondPWString = secondPW.getText();
 		String weightString = weightTF.getText();
-		int month =1;
-		String monthString = monthCB.getValue();
-		
-		switch(monthString) {
-		case "January":
-			month = 1;
-			break;
-		case "February":
-			month = 2;
-			break;
-		case "March":
-			month = 3;
-			break;
-		case "April":
-			month = 4;
-			break;
-		case "May":
-			month = 5;
-			break;
-		case "June":
-			month = 6;
-			break;
-		case "July":
-			month = 7;
-			break;
-		case "August":
-			month = 8;
-			break;
-		case "September":
-			month = 9;
-			break;
-		case "October":
-			month = 10;
-			break;
-		case "November":
-			month = 11;
-			break;
-		case "December":
-			month = 12;
-			break;
-		default:
-			break;
-		}
-		
-		boolean validName = Model.validateString(name);
-		boolean validUserName = Model.validateString(userName);
-		boolean novelUserName = Model.queryUser(userName);
-		boolean validPassword = validatePassword(firstPWString, secondPWString);
-		boolean validWeight = Model.validateInt(weightString);
-		boolean validDate = true;
+		int month = 1;
+
+		boolean validName = Model.validateName(name);
+		boolean validUserName = Model.validateUsername(username);
+		boolean novelUserName = Model.queryUser(username);
+		boolean validPassword = Model.validatePassword(firstPWString);
+		boolean validPasswordMatch = Model.validatePasswordMatch(firstPWString, secondPWString);
+		boolean validHeight = feetCB.getValue() != null && inchesCB.getValue() != null;
+		boolean validWeight = Model.validateWeight(weightString);
+		boolean validSex = sexCB.getValue() != null;
+		boolean validDate = yearCB.getValue() != null && monthCB.getValue() != null && dayCB.getValue() != null;
+
 		String output = "The following problems exist:\n\n";
+
+		LocalDate birthday = LocalDate.now();
 		
-		try {
-			LocalDate checkDate = LocalDate.of((int)yearCB.getValue(), month, (int)dayCB.getValue());
-		}catch(DateTimeException e) {
-			validDate = false;
-			output += e.getMessage() + "\n\n";
+		if (validDate) {
+			switch (monthCB.getValue()) {
+			case "January":
+				month = 1;
+				break;
+			case "February":
+				month = 2;
+				break;
+			case "March":
+				month = 3;
+				break;
+			case "April":
+				month = 4;
+				break;
+			case "May":
+				month = 5;
+				break;
+			case "June":
+				month = 6;
+				break;
+			case "July":
+				month = 7;
+				break;
+			case "August":
+				month = 8;
+				break;
+			case "September":
+				month = 9;
+				break;
+			case "October":
+				month = 10;
+				break;
+			case "November":
+				month = 11;
+				break;
+			case "December":
+				month = 12;
+				break;
+			default:
+				break;
+			}
+
+			try {
+				birthday = LocalDate.of((int) yearCB.getValue(), month, (int) dayCB.getValue());
+			} catch (DateTimeException e) {
+				validDate = false;
+				output += e.getMessage() + "\n\n";
+			}
 		}
-		
-		if(validName && validUserName && validPassword && validWeight && validDate && novelUserName) {
-			
-			LocalDate birthday = LocalDate.of((int)yearCB.getValue(), month, (int)dayCB.getValue());
-			double weight = (double)Integer.parseInt(weightString);
-			double height = (double) (12*feetCB.getValue() + inchesCB.getValue());
+		if (validName && validUserName && validPassword && validPasswordMatch && validHeight && validWeight && validSex
+				&& validDate && novelUserName) {
+
+			double weight = (double) Integer.parseInt(weightString);
+			double height = (double) (12 * feetCB.getValue() + inchesCB.getValue());
 			String sex = sexCB.getValue();
-			User user = new User(userName, name, weight, height, birthday, Model.today, sex);
+			User user = new User(username, name, weight, height, birthday, Model.today, sex);
 			Model.addUser(user, firstPWString);
-			
+
 			nameTF.clear();
 			usernameTF.clear();
 			firstPW.clear();
@@ -205,40 +204,51 @@ public class NewUserController implements Initializable{
 			dayCB.setValue(null);
 			feetCB.setValue(null);
 			inchesCB.setValue(null);
-			
+
 			a.setHeaderText("User Account Created");
-			a.setContentText("Thank you " + name + " for signing up. Please return to the previous screen to Log-in.");
+			a.setContentText("Thank you " + name + " for signing up! Please Log In.");
 			a.show();
-			
-			
-			
-		}else {
-			if(!validName) {
+			AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+			newUser.getChildren().setAll(pane);
+
+		} else {
+			if (!validName) {
 				nameTF.setStyle("-fx-text-inner-color: red;");
-    			output += "Name must be under 30 characters and cannot contain ','\n\n";
-			}if(!validUserName) {
+				output += "Name must be under 30 characters and contain only letters.\n";
+			}
+			if (!validUserName) {
 				usernameTF.setStyle("-fx-text-inner-color: red;");
-    			output += "User Name must be under 30 characters and cannot contain ','\n\n";
-			}if(!validPassword) {
-				firstPW.clear();
-				secondPW.clear();
-				output += "Passwords entered do not match";
-			}if(!validWeight) {
+				output += "Username must be under 30 characters and contain only letters and numbers.\n";
+			}
+			if (!validPassword) {
+				output += "Password must be 6-20 characters long.\n";
+			}
+			if (!validPasswordMatch) {
+				output += "Passwords entered do not match.\n";
+			}
+			if (!validDate) {
+				output += "Please enter a valid date.\n";
+			}
+			if (!validHeight) {
+				output += "Please enter your height.\n";
+			}
+			if (!validSex) {
+				output += "Please enter your sex.\n";
+			}
+			if (!validWeight) {
 				weightTF.setStyle("-fx-text-inner-color: red;");
-    			output += "Calories should be an integer less than or equal to 999,999,999\n\n";
-			}if(!novelUserName) {
+				output += "Weight must be an integer less than or equal to 1,000.\n";
+			}
+			if (!novelUserName) {
 				usernameTF.setStyle("-fx-text-inner-color: red;");
-    			output += "User Name " + userName + "already exists.\n\n";
+				output += "Username \"" + username + "\"already exists.\n";
 			}
 			a.setAlertType(AlertType.ERROR);
 			a.setHeaderText("Invalid Input");
 			a.setContentText(output);
 			a.show();
 		}
-		
-		
+
 	}
-    
-    
 
 }

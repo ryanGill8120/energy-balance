@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -277,6 +276,36 @@ public class Model {
 		if (input.contains(",") || input.length() > 30 || input.length() == 0)
 			return false;
 		return true;
+	}
+	
+	public static boolean validateName(String input) {
+		if (input != null && input.matches("^[a-zA-Z]*$") && input.length() <= 30 && input.length() != 0)
+			return true;
+		return false;
+	}
+	
+	public static boolean validateUsername(String input) {
+		if (input != null && input.matches("^[a-zA-Z0-9]*$") && input.length() <= 30 && input.length() != 0)
+			return true;
+		return false;
+	}
+	
+	public static boolean validateWeight(String input) {
+		if (input.matches("[0-9]+") && Integer.parseInt(input) <= 1000)
+			return true;
+		return false;
+	}
+
+	public static boolean validatePassword(String pw1) {
+		if (pw1 != null && pw1.length() >= 6 && pw1.length() <= 20)
+			return true;
+		return false;
+	}
+	
+	public static boolean validatePasswordMatch(String pw1, String pw2) {
+		if (pw1 != null && pw2 != null && pw1.equals(pw2))
+			return true;
+		return false;
 	}
 	
 	
