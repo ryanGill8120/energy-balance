@@ -85,10 +85,19 @@ public class FoodInputController implements Initializable{
     		nameTF.clear();
     		servingSizeTF.clear();
     		String path = "./src/staticFiles/" + pic;
-    		System.out.println(path);
+    		
     		ImageIO.write(buffImage, "jpg", new File(path));
     		a.setHeaderText("Food added succesfully");
     		a.setContentText("You have added " + name + " to your list of available foods.");
+    		try {
+    			buffImage = ImageIO.read(new File("./src/staticFiles/NoFood.png"));
+    			Image img = SwingFXUtils.toFXImage(buffImage, null);
+    			foodImg.setImage(img);
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     		a.show();
     		
     		//ImageIO.write(img, "jpg", new File("./src/staticFiles/test.png"));

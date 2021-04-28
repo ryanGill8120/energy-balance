@@ -127,6 +127,14 @@ public class User {
 		return userHistory;
 	}
 	
+	public LocalDate getLastWeighIn() {
+		return lastWeighIn;
+	}
+
+	public void setLastWeighIn(LocalDate lastWeighIn) {
+		this.lastWeighIn = lastWeighIn;
+	}
+
 	public int getBasalMetabolism() {
 		
 		Period period = Period.between(birthday, Model.today);

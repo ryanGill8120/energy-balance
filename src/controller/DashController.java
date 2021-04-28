@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -312,6 +313,19 @@ public class DashController implements Initializable{
         graph.getData().setAll(energy);
 
     }
+    
+    @FXML
+    void openWeighIn(ActionEvent event) throws IOException {
+    	
+    	Stage stage = new Stage();
+    	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/WeighIn.fxml"));
+		Scene scene = new Scene(root,600,600);
+		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
+		stage.setTitle("Weigh IN");
+		stage.setScene(scene);
+		stage.show();
+
+    }
 
 
 	@Override
@@ -340,6 +354,20 @@ public class DashController implements Initializable{
         	burned.getData().add(new XYChart.Data<String, Number>(day.getDate().toString(), day.getCaloriesBurned()));
         }
         graph.getData().setAll(consumed, burned);
+        
+        if(ChronoUnit.DAYS.between(Model.currentUser.getLastWeighIn(), Model.today) >= 7) {
+        	try {
+        	Stage stage = new Stage();
+        	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/WeighIn.fxml"));
+    		Scene scene = new Scene(root,600,600);
+    		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
+    		stage.setTitle("Weigh IN");
+    		stage.setScene(scene);
+    		stage.show();
+        	}catch(IOException e) {
+        		e.printStackTrace();
+        	}
+        }
         
         
 		

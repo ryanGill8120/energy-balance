@@ -38,5 +38,10 @@
       <Label layoutX="740.0" layoutY="85.0" text="Past Month" />
       <Label layoutX="400.0" layoutY="84.0" text="Past 3 Months" />
       <Label layoutX="94.0" layoutY="83.0" text="PastYear" />
+      <Button layoutX="1041.0" layoutY="2.0" mnemonicParsing="false" onAction="#openWeighIn" text="Weigh In">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

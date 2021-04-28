@@ -98,8 +98,17 @@ public class WorkoutInputController implements Initializable{
     		ImageIO.write(buffImage, "jpg", new File(path));
     		a.setHeaderText("Workout added successfuly");
     		a.setContentText("You added " + name + " to your list of available Workouts.");
-    		a.show();
     		
+    		try {
+    			buffImage = ImageIO.read(new File("./src/staticFiles/NoWorkout.jpeg"));
+    			Image img = SwingFXUtils.toFXImage(buffImage, null);
+    			workoutImageView.setImage(img);
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		a.show();
     	}else {
     		
     		a.setAlertType(AlertType.ERROR);

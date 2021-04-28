@@ -458,11 +458,64 @@ public class DayInputController implements Initializable{
     	meal.getChildren().setAll(pane);
 
     }
+    
+    @FXML
+    void refreshFood(ActionEvent event) throws IOException {
+    	
+    	String input;
+    	LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
+    	String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+    	String yearAgoFmt = yearAgo.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+    	
+    	
+    	if (Model.today.compareTo(datePicker.getValue()) >= 0 && datePicker.getValue().compareTo(yearAgo) >= 0) {
+    		Model.currentUser.populateUserHistory();
+	    	Model.currentDate = datePicker.getValue();
+	    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/DayInput.fxml"));
+	    	meal.getChildren().setAll(pane);
+	  
+    	}else {
+    		Alert a = new Alert(AlertType.ERROR);
+    		a.setHeaderText("No time travelling!");
+    		a.setContentText("Please select a date after " + yearAgoFmt + " and no later than " + formattedDate);
+    		a.show();
+    	}
+    	
+    	
+
+    }
+
+    @FXML
+    void refreshWorkout(ActionEvent event) throws IOException {
+    	
+    	String input;
+    	LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
+    	String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+    	String yearAgoFmt = yearAgo.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+    	
+    	
+    	if (Model.today.compareTo(datePicker.getValue()) >= 0 && datePicker.getValue().compareTo(yearAgo) >= 0) {
+    		Model.currentUser.populateUserHistory();
+	    	Model.currentDate = datePicker.getValue();
+	    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/DayInput.fxml"));
+	    	meal.getChildren().setAll(pane);
+	  
+    	}else {
+    		Alert a = new Alert(AlertType.ERROR);
+    		a.setHeaderText("No time travelling!");
+    		a.setContentText("Please select a date after " + yearAgoFmt + " and no later than " + formattedDate);
+    		a.show();
+    	}
+
+    }
+    
+    
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//local variables
 		String input;
+		datePicker.setValue(Model.today);
 		
 		//gets current User's info
 		
@@ -496,6 +549,7 @@ public class DayInputController implements Initializable{
     		input = entry.getValue().getName();
     		chooseFoodCB.getItems().add(input);
         }
+    	chooseFoodCB.setValue("-- Choose Food --");
     	foodNameLbl.setText(currentFood.getName());
     	calPerServingAmount.setText(currentFood.getCalories() + "");
     	servingNumberLbl.setText(servingSize + "");
@@ -528,6 +582,7 @@ public class DayInputController implements Initializable{
     		input = entry.getValue().getName();
     		chooseWorkoutCB.getItems().add(input);
         }
+    	chooseWorkoutCB.setValue("-- Choose Workout --");
     	workoutNameLbl.setText(currentWorkout.getName());
     	calBurnedPerRepAmount.setText(currentWorkout.getCalories() + "");
     	repNumberLbl.setText(repSize + "");
