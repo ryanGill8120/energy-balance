@@ -5,6 +5,13 @@
 	-fx-background-color: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
  
-#loginBtn, #signUpBtn{
-	-fx-background-color: "#2196F3", "rgba(255, 255, 255, 0.45)";
+#loginBtn, #signUpBtn, #backBtn, #submitBtn{
+	-fx-background-color: #82b1ff; 
+    -fx-background-radius:5;
+
+}
+
+#loginBtn:hover, #signUpBtn:hover, #backBtn:hover, #submitBtn:hover {
+	-fx-background-color: #448aff;
+    
 }
