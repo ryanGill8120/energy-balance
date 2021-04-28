@@ -1,21 +1,21 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Day {
 	
 	private String date;
 	private String user;
 	private int caloriesConsumed;
 	private int caloriesBurned;
-	private String foodList;
-	private String workoutList;
+
 	
-	public Day(String date, String user, int caloriesConsumed, int caloriesBurned, String foodList, String workoutList) {
+	public Day(String date, String user, int caloriesConsumed, int caloriesBurned) {
 		this.date = date;
 		this.user = user;
 		this.caloriesBurned = caloriesBurned;
 		this.caloriesConsumed = caloriesConsumed;
-		this.foodList = foodList;
-		this.workoutList = workoutList;
+		
 	}
 	
 	
@@ -51,30 +51,20 @@ public class Day {
 		this.caloriesBurned = caloriesBurned;
 	}
 
-	public String getFoodList() {
-		return foodList;
-	}
+	
 
-	public void setFoodList(String foodList) {
-		this.foodList = foodList;
-	}
-
-	public String getWorkoutList() {
-		return workoutList;
-	}
-
-	public void setWorkoutList(String workoutList) {
-		this.workoutList = workoutList;
-	}
+	
 
 	public int getEnergyBalance() {
-		return (int)((double)caloriesConsumed/caloriesBurned - 1) * 100;
+		double ebDouble = (((double)caloriesConsumed/caloriesBurned) - 1) * 100;
+		return (int)ebDouble;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return date + "," + user + "," + caloriesConsumed + "," + caloriesBurned + "," + 
-				foodList + "," + workoutList;
+		return date + "," + user + "," + caloriesConsumed + "," + caloriesBurned;
 	}
 	
 	

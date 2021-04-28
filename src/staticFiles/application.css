@@ -1,1 +1,17 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#root{ 
+	-fx-background-color: #C6FFDD;  /* fallback for old browsers */
+	-fx-background-color: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+ 
+#loginBtn, #signUpBtn, #backBtn, #submitBtn, #submitBtn2, #submitBtn3,#submitBtn4, .button{
+	-fx-background-color: #82b1ff; 
+    -fx-background-radius:5;
+
+}
+
+#loginBtn:hover, #signUpBtn:hover, #backBtn:hover, #submitBtn2:hover, #submitBtn3:hover,#submitBtn4:hover, .button:hover{
+	-fx-background-color: #448aff;
+    
+}
