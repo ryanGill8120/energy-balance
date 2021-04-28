@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -10,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -109,14 +112,21 @@ public class NewUserController implements Initializable{
 		return years;
 	}
 	
+	public boolean validatePassword(String pw1, String pw2) {
+		if(pw1.equals(pw2))
+			return true;
+		return false;
+	}
+	
 	@FXML
 	public void processUser() throws IOException {
 		
+		Alert a = new Alert(AlertType.CONFIRMATION);
 		String name = nameTF.getText();
 		String userName = usernameTF.getText();
-		String password = firstPW.getText();
-		double weight = (double)Integer.parseInt(weightTF.getText());
-		double height = (double) (12*feetCB.getValue() + inchesCB.getValue());
+		String firstPWString = firstPW.getText();
+		String secondPWString = secondPW.getText();
+		String weightString = weightTF.getText();
 		int month =1;
 		String monthString = monthCB.getValue();
 		
@@ -160,15 +170,71 @@ public class NewUserController implements Initializable{
 		default:
 			break;
 		}
-		//Error checking will happen here, and only create a user object if everything is good
-		//actually, local date will break if it cannot parse correct date, user entered in feb 31 or something
 		
+		boolean validName = Model.validateString(name);
+		boolean validUserName = Model.validateString(userName);
+		boolean novelUserName = Model.queryUser(userName);
+		boolean validPassword = validatePassword(firstPWString, secondPWString);
+		boolean validWeight = Model.validateInt(weightString);
+		boolean validDate = true;
+		String output = "The following problems exist:\n\n";
 		
-		LocalDate birthday = LocalDate.of((int)yearCB.getValue(), month, (int)dayCB.getValue());
-		String sex = sexCB.getValue();
-		User user = new User(userName, name, weight, height, birthday, Model.today, sex);
-		Model.addUser(user, password);
-		statusLabel.setText("User: " + userName + " has been added!");
+		try {
+			LocalDate checkDate = LocalDate.of((int)yearCB.getValue(), month, (int)dayCB.getValue());
+		}catch(DateTimeException e) {
+			validDate = false;
+			output += e.getMessage() + "\n\n";
+		}
+		
+		if(validName && validUserName && validPassword && validWeight && validDate && novelUserName) {
+			
+			LocalDate birthday = LocalDate.of((int)yearCB.getValue(), month, (int)dayCB.getValue());
+			double weight = (double)Integer.parseInt(weightString);
+			double height = (double) (12*feetCB.getValue() + inchesCB.getValue());
+			String sex = sexCB.getValue();
+			User user = new User(userName, name, weight, height, birthday, Model.today, sex);
+			Model.addUser(user, firstPWString);
+			
+			nameTF.clear();
+			usernameTF.clear();
+			firstPW.clear();
+			secondPW.clear();
+			weightTF.clear();
+			yearCB.setValue(null);
+			monthCB.setValue(null);
+			dayCB.setValue(null);
+			feetCB.setValue(null);
+			inchesCB.setValue(null);
+			
+			a.setHeaderText("User Account Created");
+			a.setContentText("Thank you " + name + " for signing up. Please return to the previous screen to Log-in.");
+			a.show();
+			
+			
+			
+		}else {
+			if(!validName) {
+				nameTF.setStyle("-fx-text-inner-color: red;");
+    			output += "Name must be under 30 characters and cannot contain ','\n\n";
+			}if(!validUserName) {
+				usernameTF.setStyle("-fx-text-inner-color: red;");
+    			output += "User Name must be under 30 characters and cannot contain ','\n\n";
+			}if(!validPassword) {
+				firstPW.clear();
+				secondPW.clear();
+				output += "Passwords entered do not match";
+			}if(!validWeight) {
+				weightTF.setStyle("-fx-text-inner-color: red;");
+    			output += "Calories should be an integer less than or equal to 999,999,999\n\n";
+			}if(!novelUserName) {
+				usernameTF.setStyle("-fx-text-inner-color: red;");
+    			output += "User Name " + userName + "already exists.\n\n";
+			}
+			a.setAlertType(AlertType.ERROR);
+			a.setHeaderText("Invalid Input");
+			a.setContentText(output);
+			a.show();
+		}
 		
 		
 	}

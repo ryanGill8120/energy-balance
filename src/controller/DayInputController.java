@@ -1,17 +1,23 @@
 package controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Map.Entry;
+
+import javax.imageio.ImageIO;
+
 import java.util.ResourceBundle;
 import application.Day;
 import application.Food;
 import application.Workout;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +31,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -32,9 +39,11 @@ import model.Model;
 
 public class DayInputController implements Initializable{
 	
-	private Food emptyFood = new Food("No Food Selected", "NoFood.jpg", "Serving Size:", 0);
-	private Workout emptyWorkout = new Workout("No Workout Selected", "NoWorkout.jpg", 0, 0, "No rep name");
+	private Food emptyFood = new Food("No Food Selected", "NoFood.png", "Serving Size:", 0);
+	private Workout emptyWorkout = new Workout("No Workout Selected", "NoWorkout.jpeg", 0, 0, "No rep name");
 	private int servingSize = 1, repSize = 1;
+	private BufferedImage buffFoodImage;
+	private BufferedImage buffWorkoutImage;
 	
 	//Live variables
 	//private LocalDate currentDate = Model.today;
@@ -197,10 +206,20 @@ public class DayInputController implements Initializable{
     void chooseFood(ActionEvent event) {
     	
     	currentFood = Model.foodMap.get(chooseFoodCB.getValue());
-    	System.out.println(currentFood.getName());
 		foodNameLbl.setText(currentFood.getName());
     	calPerServingAmount.setText(currentFood.getCalories() + "");
     	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
+    	
+    	try {
+    		String path = "./src/staticFiles/" + currentFood.getPicture();
+			buffFoodImage = ImageIO.read(new File(path));
+			Image img = SwingFXUtils.toFXImage(buffFoodImage, null);
+			foodImage.setImage(img);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 
@@ -211,6 +230,17 @@ public class DayInputController implements Initializable{
     	workoutNameLbl.setText(currentWorkout.getName());
     	calBurnedPerRepAmount.setText(currentWorkout.getCalories() + "");
     	calBurnedAmount.setText((repSize * currentWorkout.getCalories()) + "");
+    	
+    	try {
+    		String path = "./src/staticFiles/" + currentWorkout.getPicture();
+			buffWorkoutImage = ImageIO.read(new File(path));
+			Image img = SwingFXUtils.toFXImage(buffWorkoutImage, null);
+			workoutImage.setImage(img);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	
 
@@ -241,13 +271,13 @@ public class DayInputController implements Initializable{
     @FXML
     void openFood(ActionEvent event) throws IOException {
     	
-    	Stage stage = new Stage();
+    	
     	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/FoodInput.fxml"));
 		Scene scene = new Scene(root,800,800);
 		scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());
-		stage.setTitle("Add New Food");
-		stage.setScene(scene);
-		stage.show();
+		Model.foodStage.setTitle("Add New Food");
+		Model.foodStage.setScene(scene);
+		Model.foodStage.show();
 
     }
 
@@ -363,6 +393,17 @@ public class DayInputController implements Initializable{
         	calPerServingAmount.setText(currentFood.getCalories() + "");
         	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
     	}
+    	
+    	try {
+    		String path = "./src/staticFiles/" + currentFood.getPicture();
+			buffFoodImage = ImageIO.read(new File(path));
+			Image img = SwingFXUtils.toFXImage(buffFoodImage, null);
+			foodImage.setImage(img);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 
@@ -380,6 +421,17 @@ public class DayInputController implements Initializable{
         	calBurnedPerRepAmount.setText(currentWorkout.getCalories() + "");
         	calBurnedAmount.setText((repSize * currentWorkout.getCalories())+"");
     	}
+    	
+    	try {
+    		String path = "./src/staticFiles/" + currentWorkout.getPicture();
+			buffWorkoutImage = ImageIO.read(new File(path));
+			Image img = SwingFXUtils.toFXImage(buffWorkoutImage, null);
+			workoutImage.setImage(img);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 
@@ -401,6 +453,7 @@ public class DayInputController implements Initializable{
     @FXML
     void toDash(ActionEvent event) throws IOException {
     	
+    	Model.currentDate = LocalDate.now();
     	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Dash.fxml"));
     	meal.getChildren().setAll(pane);
 
@@ -448,6 +501,16 @@ public class DayInputController implements Initializable{
     	servingNumberLbl.setText(servingSize + "");
     	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
     	
+    	try {
+			buffFoodImage = ImageIO.read(new File("./src/staticFiles/" + currentFood.getPicture()));
+			Image img = SwingFXUtils.toFXImage(buffFoodImage, null);
+			foodImage.setImage(img);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	//loads workout info
     	if (Model.workoutHistoryMap.containsKey(currentDay.getUser() + "," + currentDay.getDate())) {
     		String[] workoutHistoryArr = Model.workoutHistoryMap.get(currentDay.getUser() + "," + currentDay.getDate()).split(",");
@@ -471,6 +534,16 @@ public class DayInputController implements Initializable{
     	calBurnedAmount.setText((repSize * currentWorkout.getCalories())+"");
     	basalLbl.setText(Model.currentUser.getBasalMetabolism() + "");
     	energyLbl.setText(currentDay.getEnergyBalance() + "%");
+    	
+    	try {
+			buffWorkoutImage = ImageIO.read(new File("./src/staticFiles/" + currentWorkout.getPicture()));
+			Image img = SwingFXUtils.toFXImage(buffWorkoutImage, null);
+			workoutImage.setImage(img);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
 		
 	}

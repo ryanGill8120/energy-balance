@@ -36,7 +36,6 @@ public class Food {
 	}
 	
 	
-	
 	public String getServingSize() {
 		return servingSize;
 	}

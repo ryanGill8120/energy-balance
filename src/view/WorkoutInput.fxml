@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -13,34 +14,39 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="128.0" layoutY="149.0" text="Workout Name">
+      <Label layoutX="79.0" layoutY="152.0" text="Workout Name">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="535.0" layoutY="152.0" text="Name of Repetition">
+      <Label layoutX="66.0" layoutY="374.0" text="Name of Repetition">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="74.0" layoutY="332.0" text="Calories burned per repetition">
+      <Label layoutX="25.0" layoutY="271.0" text="Calories burned per repetition">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="477.0" layoutY="331.0" text="Number of repetitions per workout">
+      <Label layoutX="11.0" layoutY="473.0" text="Number of repetitions per workout">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="nameTF" layoutX="105.0" layoutY="203.0" />
-      <TextField fx:id="repNameTF" layoutX="527.0" layoutY="203.0" />
-      <TextField fx:id="calTF" layoutX="105.0" layoutY="387.0" />
-      <TextField fx:id="repTF" layoutX="527.0" layoutY="387.0" />
-      <Button fx:id="submitBtn" layoutX="349.0" layoutY="541.0" mnemonicParsing="false" onAction="#process" text="Submit">
+      <TextField fx:id="nameTF" layoutX="56.0" layoutY="203.0" />
+      <TextField fx:id="repNameTF" layoutX="57.0" layoutY="416.0" />
+      <TextField fx:id="calTF" layoutX="56.0" layoutY="318.0" />
+      <TextField fx:id="repTF" layoutX="59.0" layoutY="529.0" />
+      <Button fx:id="submitBtn" layoutX="350.0" layoutY="620.0" mnemonicParsing="false" onAction="#process" text="Submit">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
+      <Button layoutX="506.0" layoutY="203.0" mnemonicParsing="false" onAction="#chooseWorkoutPic" text="Choose Food Pic" />
+      <ImageView fx:id="workoutImageView" fitHeight="259.0" fitWidth="367.0" layoutX="354.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../staticFiles/NoWorkout.jpeg" />
+         </image></ImageView>
    </children>
 </AnchorPane>

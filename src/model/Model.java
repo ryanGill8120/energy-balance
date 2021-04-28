@@ -14,11 +14,13 @@ import application.Day;
 import application.Food;
 import application.User;
 import application.Workout;
+import javafx.stage.Stage;
 
 public class Model {
 	
 	
-	
+	public static Stage foodStage = new Stage();
+	public static Stage workoutStage = new Stage();
 	public static LocalDate today = LocalDate.now();
 	
 	//data structures for Users, Food, Workouts, User History by day (for calendar and graph)
@@ -256,6 +258,27 @@ public class Model {
 			return true;
 		return false;
 	}
+	
+	public static boolean queryUser(String user) {
+		if(Model.auth.containsKey(user))
+			return false;
+		return true;
+	}
+	
+	//Error checking functions
+	
+	public static boolean validateInt(String input) {
+		if (input.matches("[0-9]+") && input.length() <= 9 && input.length() > 0)
+			return true;
+		return false;
+	}
+	
+	public static boolean validateString(String input) {
+		if (input.contains(",") || input.length() > 30 || input.length() == 0)
+			return false;
+		return true;
+	}
+	
 	
 	
 	

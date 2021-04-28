@@ -151,9 +151,6 @@ public class User {
 	}
 	
 	
-
-
-
 	@Override
 	public String toString() {
 		return userName + "," + name + "," + weight + "," + height + "," + birthday.toString() + "," + lastWeighIn.toString()+ "," + sex;
