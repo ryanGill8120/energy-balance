@@ -33,7 +33,7 @@ Understanding the relationship between the calories you burn and calories you co
 - [Download the latest release](https://github.com/ryanGill8120/energy-balance/releases/tag/1.0.0) of Energy Balance directly from GitHub. ([Beta](https://github.com/ryanGill8120/energy-balance/releases/tag/1.0.0))
 - Clone the repo: `git clone https://github.com/ryanGill8120/energy-balance.git`
 - Download IDE Eclipse that is right for you (https://www.eclipse.org/downloads/)
-- Install the Eclipse JavaFX plugin Version (1.2.0) - (https://download.eclipse.org/efxclipse/updates-released/) see more [Configure JAVAFX](#configureJavafx)
+- [Configure JAVAFX](#configureJavaFX) - Install the Eclipse JavaFX plugin Version (1.2.0) - (https://download.eclipse.org/efxclipse/updates-released/) see more [Configure JAVAFX](#configureJavafx)
 - [SceneBuilder](#sceneBuilder) - If Scenebuilder is not installed: Please install SceneBuider: Download the installer Version (2.0) (https://www.oracle.com/java/technologies/javafxscenebuilder-1x-archive-downloads.html)  
 
 ## Configure JAVAFX:
