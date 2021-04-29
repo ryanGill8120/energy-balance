@@ -20,8 +20,10 @@ public class Main extends Application {
 		try {
 			
 
-			Model.currentDate = LocalDate.now();
-			Model.loadFiles();
+			Model.currentDate = LocalDate.now();  //sets current date at launch
+			Model.loadFiles();  //loads all properties file data into HashMaps
+			
+			//JavaFX generated code
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			Scene scene = new Scene(root,1200,900);
 			scene.getStylesheets().add(getClass().getResource("/staticFiles/application.css").toExternalForm());

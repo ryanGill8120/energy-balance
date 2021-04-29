@@ -31,9 +31,13 @@ import javafx.event.*;
 import java.net.*;
 import java.util.*;
 
+/**
+ * A window to allow the user to create a new workout type and add it to file
+ *
+ */
 public class WorkoutInputController implements Initializable{
-	
-//	private Desktop desktop = Desktop.getDesktop();
+
+	//instance variable to store a buffered image
 	private BufferedImage buffImage;
 	
 	@FXML
@@ -57,9 +61,16 @@ public class WorkoutInputController implements Initializable{
     @FXML
     private ImageView workoutImageView;
     
+    /**
+     * @param event
+     * @throws IOException
+     * 
+     * lets the user choose a picture using their OS's file chooser
+     */
     @FXML
     void chooseWorkoutPic(ActionEvent event) throws IOException {
     	
+    	//fileChoser set up to only view images
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Workout Picture");
     	fileChooser.getExtensionFilters().addAll(
@@ -67,8 +78,12 @@ public class WorkoutInputController implements Initializable{
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
             );
+    	
+    	//launches from static stage
     	File foodFile = fileChooser.showOpenDialog(Model.workoutStage);
     	if(foodFile != null) {
+    		
+    		//sets instance variable and updates the ImageView
     		buffImage = ImageIO.read(foodFile);
     		Image img = SwingFXUtils.toFXImage(buffImage, null);
     		workoutImageView.setImage(img);
@@ -76,36 +91,49 @@ public class WorkoutInputController implements Initializable{
 
     }
     
+    /**
+     * @param event
+     * @throws IOException
+     * 
+     * Handles error checking and adds a new Workout to file if no errors exist
+     */
     @FXML
     void process(ActionEvent event) throws IOException {
     	
-    	
+    	//gets data from view
     	String name = nameTF.getText();
     	String repName = repNameTF.getText();
     	String calories = calTF.getText();
     	String reps = repTF.getText();
     	
+    	//validity flags with associated functions called
     	boolean validName = Model.validateString(name);
     	boolean validRepName = Model.validateString(repName);
     	boolean validCalories = Model.validateInt(calories);
     	boolean validReps = Model.validateInt(reps);
     	
+    	//if all input is valid
     	Alert a = new Alert(AlertType.CONFIRMATION);
     	if (validName && validRepName && validCalories && validReps) {
     		
+    		//constructs Workout object and adds it to file
     		String pic = name + ".png";
     		Workout workout = new Workout(name, pic, (int)Integer.parseInt(calories), (int)Integer.parseInt(reps), repName);
     		Model.addWorkout(workout);
     		
+    		//cleans up view
     		nameTF.clear();
     		repNameTF.clear();
     		calTF.clear();
     		repTF.clear();
+    		
+    		//writes the image to file and preps alert
     		String path = "./src/staticFiles/" + pic;
     		ImageIO.write(buffImage, "jpg", new File(path));
     		a.setHeaderText("Workout added successfuly");
     		a.setContentText("You added " + name + " to your list of available Workouts.");
     		
+    		//resets the Image View
     		try {
     			buffImage = ImageIO.read(new File("./src/staticFiles/NoWorkout.jpeg"));
     			Image img = SwingFXUtils.toFXImage(buffImage, null);
@@ -114,21 +142,34 @@ public class WorkoutInputController implements Initializable{
     		} catch (IOException e) {
     			e.printStackTrace();
     		}
+    		
+    		//shows alert
     		a.show();
+    		
+    	//At least one error exists
     	}else {
     		
+    		//preps alert
     		a.setAlertType(AlertType.ERROR);
     		a.setHeaderText("Invalid Input");
     		String output = "The following problems exist:\n\n";
+    		
+    		//Invalid Name
     		if(!validName) {
     			nameTF.setStyle("-fx-text-inner-color: red;");
     			output += "Name must be under 30 characters and cannot contain ','\n\n";
+    			
+    		//Invalid Rep Name
     		}if(!validRepName) {
     			repNameTF.setStyle("-fx-text-inner-color: red;");
     			output += "Rep Name must be under 30 characters and cannot contain ','\n\n";
+    			
+    		//Invalid Calories
     		}if(!validCalories) {
     			calTF.setStyle("-fx-text-inner-color: red;");
     			output += "Calories should be an integer less than or equal to 999,999,999\n\n";
+    			
+    		//Invalid Reps
     		}if(!validReps) {
     			repTF.setStyle("-fx-text-inner-color: red;");
     			output += "Reps should be an integer less than or equal to 999,999,999\n\n";
@@ -141,6 +182,9 @@ public class WorkoutInputController implements Initializable{
 
     }
 
+	/**
+	 * sets initial image to default image
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

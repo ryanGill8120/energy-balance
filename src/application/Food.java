@@ -1,5 +1,10 @@
 package application;
 
+/**
+ * A class that holds the data for a food object, used to compartmentalize related
+ * information into one structure
+ *
+ */
 public class Food {
 	
 	private String name;
@@ -14,11 +19,13 @@ public class Food {
 		this.calories = calories;
 	}
 	
+	//creates a CSV string for use in writing to properties files
 	@Override
 	public String toString() {
 		return name + "," + picture + "," + servingSize + "," + calories;
 	}
 	
+	//getters and setters
 	public String getName() {
 		return name;
 	}
@@ -34,7 +41,6 @@ public class Food {
 	public int getCalories() {
 		return calories;
 	}
-	
 	
 	public String getServingSize() {
 		return servingSize;

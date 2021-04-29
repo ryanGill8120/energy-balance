@@ -16,6 +16,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 
+/**
+ * Allows the user to Login, handles the authentication
+ *
+ */
 public class LoginController {
 	
 	@FXML
@@ -33,12 +37,17 @@ public class LoginController {
     @FXML
     private TextField userTF;
 
+    //takes user to the dash window if the authentication is successful
     @FXML
     void toDash(ActionEvent event) throws IOException {
+    	
+    	//if user authentication is valid
     	if (Model.authenticate(userTF.getText(), pwField.getText())) {
     		Model.currentUser = Model.userMap.get(userTF.getText());
     		AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Dash.fxml"));
     		root.getChildren().setAll(pane);
+    		
+    	//displays error alert otherwise
     	} else {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setHeaderText("Invalid Username or Password");
@@ -49,6 +58,7 @@ public class LoginController {
     	}
     }
     
+    //takes user to the new User sign-up window
     @FXML
     void toNewUser(ActionEvent event) throws IOException {
     	

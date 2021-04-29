@@ -49,6 +49,7 @@ import java.util.*;
 
 public class DayInputController implements Initializable{
 	
+	//instance variables used
 	private Food emptyFood = new Food("No Food Selected", "NoFood.png", "Serving Size:", 0);
 	private Workout emptyWorkout = new Workout("No Workout Selected", "NoWorkout.jpeg", 0, 0, "No rep name");
 	private int servingSize = 1, repSize = 1;
@@ -56,7 +57,6 @@ public class DayInputController implements Initializable{
 	private BufferedImage buffWorkoutImage;
 	
 	//Live variables
-	//private LocalDate currentDate = Model.today;
 	private Day currentDay;
 	private Food currentFood = emptyFood;
 	private Workout currentWorkout = emptyWorkout;
@@ -170,12 +170,8 @@ public class DayInputController implements Initializable{
     @FXML
     private ImageView workoutImage;
 
-    
-
     @FXML
     private ComboBox<String> chooseWorkoutCB;
-
-    
 
     @FXML
     private Label servingNumberLbl;
@@ -188,21 +184,36 @@ public class DayInputController implements Initializable{
 
     
     //FXML functions
+    
+    
+    /**
+     * @param event
+     * @throws IOException
+     * 
+     * Allows the user to switch the date using the DatePicker control
+     */
     @FXML
     void setDate(ActionEvent event) throws IOException {
     	
+    	//determines the date from a year ago, anything before this would be unreachable since userHistory only contains the 
+    	//last year's worth of data
     	String input;
     	LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
     	String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     	String yearAgoFmt = yearAgo.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     	
-    	
+    	//if date chosen is not in the future, but not more than a year ago
     	if (Model.today.compareTo(datePicker.getValue()) >= 0 && datePicker.getValue().compareTo(yearAgo) >= 0) {
+    		
+    		//repopulates history so that changes made are saved
     		Model.currentUser.populateUserHistory();
-	    	Model.currentDate = datePicker.getValue();
+	    	Model.currentDate = datePicker.getValue();  //sets currentDate to the datePicker value
+	    	
+	    	//scene is reloaded, but initialize() will load data based on the currentDate LocalDate value, thus switching the day
 	    	AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/DayInput.fxml"));
 	    	meal.getChildren().setAll(pane);
 	  
+	    //date is out of bounds, error pop-ups shown to user
     	}else {
     		Alert a = new Alert(AlertType.ERROR);
     		a.setHeaderText("No time travelling!");
@@ -212,14 +223,21 @@ public class DayInputController implements Initializable{
 
     }
 
+    /**
+     * @param event
+     * 
+     * Allows user to select a food from the comboBox
+     */
     @FXML
     void chooseFood(ActionEvent event) {
     	
+    	//sets objects and view labels to the chosen value
     	currentFood = Model.foodMap.get(chooseFoodCB.getValue());
 		foodNameLbl.setText(currentFood.getName());
     	calPerServingAmount.setText(currentFood.getCalories() + "");
     	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
     	
+    	//loads the picture from file and displays it to the user
     	try {
     		String path = "./src/staticFiles/" + currentFood.getPicture();
 			buffFoodImage = ImageIO.read(new File(path));
@@ -233,14 +251,21 @@ public class DayInputController implements Initializable{
 
     }
 
+    /**
+     * @param event
+     * 
+     * Identical functionality to chooseFood(), but does so for workout ComboBox
+     */
     @FXML
     void chooseWorkout(ActionEvent event) {
     	
+    	//sets object and labels
     	currentWorkout = Model.workoutMap.get(chooseWorkoutCB.getValue());
     	workoutNameLbl.setText(currentWorkout.getName());
     	calBurnedPerRepAmount.setText(currentWorkout.getCalories() + "");
     	calBurnedAmount.setText((repSize * currentWorkout.getCalories()) + "");
     	
+    	//loads picture
     	try {
     		String path = "./src/staticFiles/" + currentWorkout.getPicture();
 			buffWorkoutImage = ImageIO.read(new File(path));
@@ -256,11 +281,13 @@ public class DayInputController implements Initializable{
 
     }
 
+    //dead function?
     @FXML
     void  Servings(ActionEvent event) {
 
     }
 
+    //increments the serving size and displays it
     @FXML
     void servingPlus(ActionEvent event) {
     	servingSize++;
@@ -268,6 +295,7 @@ public class DayInputController implements Initializable{
     	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
     }
 
+    //decrements the serving size and displays it
     @FXML
     void servingMinus(ActionEvent event) {
     	servingSize--;
@@ -278,6 +306,7 @@ public class DayInputController implements Initializable{
 
     }
 
+    //Takes user to the Add New Food Window
     @FXML
     void openFood(ActionEvent event) throws IOException {
     	
@@ -291,6 +320,7 @@ public class DayInputController implements Initializable{
 
     }
 
+    //Takes the user to the add New Workout Window
     @FXML
     void openWorkout(ActionEvent event) throws IOException {
     	
@@ -304,6 +334,7 @@ public class DayInputController implements Initializable{
 
     }
 
+    //increments the rep size and displays it
     @FXML
     void repPlus(ActionEvent event) {
     	
@@ -313,6 +344,7 @@ public class DayInputController implements Initializable{
 
     }
 
+    //decrements the rep size and displays it
     @FXML
     void repMinus(ActionEvent event) {
     	
@@ -326,20 +358,31 @@ public class DayInputController implements Initializable{
 
     }
 
+    //Once user has selected their food and number of servings, this function handles the addition of this food to the user's history as well
+    //as displaying the updated information to them on the current screen
     @FXML
     void addFoodToDay(ActionEvent event) throws IOException {
     	
-    	int servingCal = currentFood.getCalories() * servingSize;
+    	int servingCal = currentFood.getCalories() * servingSize; //calculates calories for this serving
+    	//output string for list view assembled
     	String output = currentFood.getName() + " : " + currentFood.getServingSize() + " (x" + servingSize + ") : " + servingCal + " calories";
-    	if (foodObs.get(0).equals("*** No Food Eaten Today ***")) {
+    	
+    	//Handles the fact that populateUserHistory() in user assumes that the user at least ate their basal metabolism on a day that has no data.
+    	//If they are adding food to a blank, the string below will be present. and if it is, the user's calories will be set to zero since actual 
+    	//food data is being added
+     	if (foodObs.get(0).equals("*** No Food Eaten Today ***")) {
     		currentDay.setCaloriesConsumed(0);
     		foodObs.clear();
     	}
+     	
+     	//now adds relevant data to controls and shows the food in the ListView
     	currentDay.setCaloriesConsumed(currentDay.getCaloriesConsumed() + servingCal);
     	totalCalConsumed.setText(currentDay.getCaloriesConsumed()+ "");
     	foodObs.add(output);
     	foodEaten.setItems(foodObs);
     	String foodHistoryString = "";
+    	
+    	//Constructs the string that will be used in the foodHistory properties file
     	for (int i = 0; i < foodObs.size(); i++) {
     		if (i != foodObs.size()-1) {
     			foodHistoryString += foodObs.get(i) + ",";
@@ -347,29 +390,42 @@ public class DayInputController implements Initializable{
     			foodHistoryString += foodObs.get(i);
     		}
     	}
+    	
+    	//stores the data
     	Model.addDay(currentDay);
     	Model.addFoodHistory(currentDay, foodHistoryString);
+    	
+    	//resets labels following the changes
     	servingSize = 1;
     	servingNumberLbl.setText("1");
     	energyLbl.setText(currentDay.getEnergyBalance()+"%");
     	
 
     }
+    
+    //Identical in functionality to addFoodToDay, but now for workouts. This time, basal metabolism is always added to the calories burned for
+    //the day, per actual nutrition formulae
 
     @FXML
     void addWorkoutToDay(ActionEvent event) throws IOException {
-    	
+    	//setup
     	int repCal = currentWorkout.getCalories() * repSize;
     	String output = currentWorkout.getName() + " : " + currentWorkout.getRepSize();
     	output += " " + currentWorkout.getRepName() + "(x" + repSize + ") : " + repCal + " calories";
+    	
+    	//checks if the workout is first added for the day, updates listView accordingly
     	if (workoutObs.get(0).equals("*** No Workouts Done Today ***")) {
     		currentDay.setCaloriesBurned(Model.currentUser.getBasalMetabolism());
     		workoutObs.clear();
     	}
+    	
+    	//updates controls
     	currentDay.setCaloriesBurned(currentDay.getCaloriesBurned() + repCal);
     	totalCalBurned.setText(currentDay.getCaloriesBurned()+ "");
     	workoutObs.add(output);
     	workoutsDone.setItems(workoutObs);
+    	
+    	//prepares a string for writing to file
     	String workoutHistoryString = "";
     	for (int i = 0; i < workoutObs.size(); i++) {
     		if (i != workoutObs.size()-1) {
@@ -378,8 +434,12 @@ public class DayInputController implements Initializable{
     			workoutHistoryString += workoutObs.get(i);
     		}
     	}
+    	
+    	//adds data to file
     	Model.addDay(currentDay);
     	Model.addWorkoutHistory(currentDay, workoutHistoryString);
+    	
+    	//resets controls after addition
     	repSize = 1;
     	repNumberLbl.setText("1");
     	energyLbl.setText(currentDay.getEnergyBalance()+"%");
@@ -389,14 +449,18 @@ public class DayInputController implements Initializable{
 
     }
 
+    //allows the user to search for a food in the search bar
     @FXML
     void searchFood(ActionEvent event) {
     	
+    	//if the food is found, update object and labels
     	if (Model.queryFood(searchFoodTF.getText())) {
     		currentFood = Model.foodMap.get(searchFoodTF.getText());
     		foodNameLbl.setText(currentFood.getName());
         	calPerServingAmount.setText(currentFood.getCalories() + "");
         	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
+        	
+        //food is not found, default object is set and labels too
     	}else {
     		currentFood = emptyFood;
     		foodNameLbl.setText(currentFood.getName());
@@ -404,6 +468,7 @@ public class DayInputController implements Initializable{
         	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
     	}
     	
+    	//loads the appropriate picture in either case
     	try {
     		String path = "./src/staticFiles/" + currentFood.getPicture();
 			buffFoodImage = ImageIO.read(new File(path));
@@ -417,14 +482,19 @@ public class DayInputController implements Initializable{
 
     }
 
+    
+    //Identical functionality to searchFood, but for workouts
     @FXML
     void searchWorkout(ActionEvent event) {
     	
+    	//workout is found, update object and controls
     	if (Model.queryWorkout(searchWorkoutTF.getText())) {
     		currentWorkout = Model.workoutMap.get(searchWorkoutTF.getText());
     		workoutNameLbl.setText(currentWorkout.getName());
     		calBurnedPerRepAmount.setText(currentWorkout.getCalories() + "");
     		calBurnedAmount.setText((repSize * currentWorkout.getCalories()) + "");
+    		
+    	//workout not found, default object used
     	}else {
     		currentWorkout = emptyWorkout;
     		workoutNameLbl.setText(currentWorkout.getName());
@@ -432,6 +502,7 @@ public class DayInputController implements Initializable{
         	calBurnedAmount.setText((repSize * currentWorkout.getCalories())+"");
     	}
     	
+    	//loads appropriate picture
     	try {
     		String path = "./src/staticFiles/" + currentWorkout.getPicture();
 			buffWorkoutImage = ImageIO.read(new File(path));
@@ -445,6 +516,7 @@ public class DayInputController implements Initializable{
 
     }
 
+    //displays an alert explaining basal metabolism
     @FXML
     void getBaslAlert(ActionEvent event) {
     	
@@ -460,6 +532,7 @@ public class DayInputController implements Initializable{
 	@FXML
     private Button backBtn;
 
+	//takes the user to the Dash Window (back button)
     @FXML
     void toDash(ActionEvent event) throws IOException {
     	
@@ -469,6 +542,7 @@ public class DayInputController implements Initializable{
 
     }
     
+    //refreshes the combobox by reloading scene, same execution that reloads the screen when switching dates
     @FXML
     void refreshFood(ActionEvent event) throws IOException {
     	
@@ -495,6 +569,7 @@ public class DayInputController implements Initializable{
 
     }
 
+  //refreshes the combobox by reloading scene, same execution that reloads the screen when switching dates
     @FXML
     void refreshWorkout(ActionEvent event) throws IOException {
     	
@@ -520,7 +595,8 @@ public class DayInputController implements Initializable{
     }
     
     
-
+    
+    //Sets the data seen at the opening of the Nutrition Manager
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//local variables
@@ -528,12 +604,11 @@ public class DayInputController implements Initializable{
 		datePicker.setValue(Model.today);
 		
 		//gets current User's info
-		
 		Model.currentUser.populateUserHistory();
 		String formattedDate = Model.currentDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     	currentDateLbl.setText(formattedDate);
     	
-    	
+    	//loads the day object from the user's history
     	Day day = Model.currentUser.getDay(Model.currentDate);
     	if (day != null) {
     		currentDay = day;
@@ -543,28 +618,41 @@ public class DayInputController implements Initializable{
     	}
     	
     	//loads food info
+    	
+    	//finds the foodEaten history from the hashmap
     	if (Model.foodHistoryMap.containsKey(currentDay.getUser() + "," + currentDay.getDate())) {
+    		
+    		//Each food item is separated by a comma in the string (CSV), splits each item into a string array
     		String[] foodHistoryArr = Model.foodHistoryMap.get(currentDay.getUser() + "," + currentDay.getDate()).split(",");
+    		
+    		//iterates over array and adds each item to the foodEaten ListView
     		for(String f: foodHistoryArr) {
     			foodObs.add(f);
     		}
     		totalCalConsumed.setText(currentDay.getCaloriesConsumed()+"");
+    	//No food eaten for the day in the history file
     	}else {
     		foodObs.add("*** No Food Eaten Today ***");
     		totalCalConsumed.setText(0+"");
     	}
     	
+    	//actual ListView setup
     	foodEaten.getItems().setAll(foodObs);
+    	
+    	//Loads food combo box with food from file
     	for(Entry<String, Food> entry: Model.foodMap.entrySet()) {
     		input = entry.getValue().getName();
     		chooseFoodCB.getItems().add(input);
         }
+    	
+    	//more control setup
     	chooseFoodCB.setValue("-- Choose Food --");
     	foodNameLbl.setText(currentFood.getName());
     	calPerServingAmount.setText(currentFood.getCalories() + "");
     	servingNumberLbl.setText(servingSize + "");
     	calConsumedAmount.setText((servingSize * currentFood.getCalories())+"");
     	
+    	//loads the food image
     	try {
 			buffFoodImage = ImageIO.read(new File("./src/staticFiles/" + currentFood.getPicture()));
 			Image img = SwingFXUtils.toFXImage(buffFoodImage, null);
@@ -575,7 +663,9 @@ public class DayInputController implements Initializable{
 			e.printStackTrace();
 		}
     	
-    	//loads workout info
+    	//loads workout info, similar to code above, but for workouts
+    	
+    	//loads ListView and control data
     	if (Model.workoutHistoryMap.containsKey(currentDay.getUser() + "," + currentDay.getDate())) {
     		String[] workoutHistoryArr = Model.workoutHistoryMap.get(currentDay.getUser() + "," + currentDay.getDate()).split(",");
     		for(String w: workoutHistoryArr) {
@@ -588,10 +678,14 @@ public class DayInputController implements Initializable{
     	}
     	
     	workoutsDone.getItems().setAll(workoutObs);
+    	
+    	//sets up comboBox
     	for(Entry<String, Workout> entry: Model.workoutMap.entrySet()) {
     		input = entry.getValue().getName();
     		chooseWorkoutCB.getItems().add(input);
         }
+    	
+    	//more control setup
     	chooseWorkoutCB.setValue("-- Choose Workout --");
     	workoutNameLbl.setText(currentWorkout.getName());
     	calBurnedPerRepAmount.setText(currentWorkout.getCalories() + "");
@@ -600,6 +694,7 @@ public class DayInputController implements Initializable{
     	basalLbl.setText(Model.currentUser.getBasalMetabolism() + "");
     	energyLbl.setText(currentDay.getEnergyBalance() + "%");
     	
+    	//loads the appropriate picture
     	try {
 			buffWorkoutImage = ImageIO.read(new File("./src/staticFiles/" + currentWorkout.getPicture()));
 			Image img = SwingFXUtils.toFXImage(buffWorkoutImage, null);
