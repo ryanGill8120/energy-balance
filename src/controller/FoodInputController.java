@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +20,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Model;
 
 public class FoodInputController implements Initializable{
 	
-	private Desktop desktop = Desktop.getDesktop();
+//	private Desktop desktop = Desktop.getDesktop();
 	private BufferedImage buffImage;
 	
     @FXML
@@ -95,11 +95,11 @@ public class FoodInputController implements Initializable{
     			foodImg.setImage(img);
     			
     		} catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
     		a.show();
-    		
+    		Stage stage = (Stage) calTF.getScene().getWindow();
+    	    stage.close();
     		//ImageIO.write(img, "jpg", new File("./src/staticFiles/test.png"));
     		
     	}else {
@@ -135,7 +135,6 @@ public class FoodInputController implements Initializable{
 			foodImg.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

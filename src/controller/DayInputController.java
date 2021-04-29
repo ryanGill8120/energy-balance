@@ -181,7 +181,6 @@ public class DayInputController implements Initializable{
     @FXML
     void setDate(ActionEvent event) throws IOException {
     	
-    	String input;
     	LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
     	String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     	String yearAgoFmt = yearAgo.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
@@ -217,7 +216,6 @@ public class DayInputController implements Initializable{
 			foodImage.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -238,7 +236,6 @@ public class DayInputController implements Initializable{
 			workoutImage.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -401,7 +398,6 @@ public class DayInputController implements Initializable{
 			foodImage.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -429,7 +425,6 @@ public class DayInputController implements Initializable{
 			workoutImage.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -462,7 +457,6 @@ public class DayInputController implements Initializable{
     @FXML
     void refreshFood(ActionEvent event) throws IOException {
     	
-    	String input;
     	LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
     	String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     	String yearAgoFmt = yearAgo.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
@@ -488,7 +482,6 @@ public class DayInputController implements Initializable{
     @FXML
     void refreshWorkout(ActionEvent event) throws IOException {
     	
-    	String input;
     	LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
     	String formattedDate = Model.today.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     	String yearAgoFmt = yearAgo.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
@@ -561,7 +554,6 @@ public class DayInputController implements Initializable{
 			foodImage.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -596,7 +588,6 @@ public class DayInputController implements Initializable{
 			workoutImage.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	

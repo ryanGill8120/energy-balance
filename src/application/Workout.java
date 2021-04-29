@@ -1,13 +1,13 @@
 package application;
 
 public class Workout {
-	
+
 	private String name;
 	private String picture;
-	private int calories; //burned per rep
+	private int calories; // burned per rep
 	private int repSize;
 	private String repName;
-	
+
 	public Workout(String name, String picture, int calories, int repSize, String repName) {
 		this.name = name;
 		this.picture = picture;
@@ -15,7 +15,7 @@ public class Workout {
 		this.repSize = repSize;
 		this.repName = repName;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

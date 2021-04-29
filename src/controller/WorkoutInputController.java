@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,11 +21,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Model;
 
 public class WorkoutInputController implements Initializable{
 	
-	private Desktop desktop = Desktop.getDesktop();
+//	private Desktop desktop = Desktop.getDesktop();
 	private BufferedImage buffImage;
 	
 	@FXML
@@ -105,10 +105,11 @@ public class WorkoutInputController implements Initializable{
     			workoutImageView.setImage(img);
     			
     		} catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
     		a.show();
+    		Stage stage = (Stage) repTF.getScene().getWindow();
+    	    stage.close();
     	}else {
     		
     		a.setAlertType(AlertType.ERROR);
@@ -144,7 +145,6 @@ public class WorkoutInputController implements Initializable{
 			workoutImageView.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

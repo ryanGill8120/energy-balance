@@ -32,18 +32,18 @@ public class LoginController {
 
     @FXML
     void toDash(ActionEvent event) throws IOException {
-    	
     	if (Model.authenticate(userTF.getText(), pwField.getText())) {
     		Model.currentUser = Model.userMap.get(userTF.getText());
     		AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Dash.fxml"));
     		root.getChildren().setAll(pane);
-    	}else {
+    	} else {
     		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setHeaderText("User Name or Password invalid");
-    		alert.setContentText("Please try again, or click sign up if you are a new user");
+    		alert.setHeaderText("Invalid Username or Password");
+    		alert.setContentText("The username or password provided were not found.\nPlease sign up if you are a new user.");
     		alert.show();
+    		pwField.clear();
+    		userTF.clear();
     	}
-    	
     }
     
     @FXML
