@@ -7,11 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 import model.Model;
-import javafx.application.*;
-import javafx.stage.*;
 
 
 public class Main extends Application {

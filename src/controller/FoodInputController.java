@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,18 +22,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
-import javafx.fxml.*;
-import java.awt.*;
-import java.awt.image.*;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
-import javafx.event.*;
-import java.net.*;
-import java.util.*;
 
 public class FoodInputController implements Initializable{
 	
-	private Desktop desktop = Desktop.getDesktop();
+//	private Desktop desktop = Desktop.getDesktop();
 	private BufferedImage buffImage;
 	
     @FXML
@@ -104,7 +95,6 @@ public class FoodInputController implements Initializable{
     			foodImg.setImage(img);
     			
     		} catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
     		a.show();
@@ -145,7 +135,6 @@ public class FoodInputController implements Initializable{
 			foodImg.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -1,24 +1,20 @@
 package application;
 
-import java.util.ArrayList;
-
 public class Day {
-	
+
 	private String date;
 	private String user;
 	private int caloriesConsumed;
 	private int caloriesBurned;
 
-	
 	public Day(String date, String user, int caloriesConsumed, int caloriesBurned) {
 		this.date = date;
 		this.user = user;
 		this.caloriesBurned = caloriesBurned;
 		this.caloriesConsumed = caloriesConsumed;
-		
+
 	}
-	
-	
+
 	public String getDate() {
 		return date;
 	}
@@ -51,22 +47,14 @@ public class Day {
 		this.caloriesBurned = caloriesBurned;
 	}
 
-	
-
-	
-
 	public int getEnergyBalance() {
-		double ebDouble = (((double)caloriesConsumed/caloriesBurned) - 1) * 100;
-		return (int)ebDouble;
+		double ebDouble = (((double) caloriesConsumed / caloriesBurned) - 1) * 100;
+		return (int) ebDouble;
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return date + "," + user + "," + caloriesConsumed + "," + caloriesBurned;
 	}
-	
-	
 
 }
