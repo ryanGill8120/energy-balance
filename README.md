@@ -16,8 +16,7 @@
   
 
 <p align="center">
-  ![alt text](./doc/logo.png?raw=true)
-  # hello
+  <img src="./doc/logo.png?raw=true">
 </p>
 
 # Description 
