@@ -15,6 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Model;
+import javafx.fxml.*;
+import javafx.scene.control.*;
+import javafx.event.*;
+import java.net.*;
+import java.util.*;
 
 public class WeighInController implements Initializable{
 	

@@ -22,6 +22,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import model.Model;
+import javafx.fxml.*;
+import java.awt.image.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.image.*;
+import javafx.event.*;
+import java.net.*;
+import java.util.*;
 
 public class WorkoutInputController implements Initializable{
 	

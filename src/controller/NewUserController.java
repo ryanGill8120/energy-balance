@@ -20,6 +20,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.Model;
+import javafx.fxml.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.event.*;
+import java.net.*;
+import java.util.*;
 
 public class NewUserController implements Initializable {
 

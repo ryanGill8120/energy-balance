@@ -36,6 +36,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Model;
+import javafx.fxml.*;
+import application.*;
+import java.awt.image.*;
+import javafx.collections.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
+import javafx.event.*;
+import java.net.*;
+import java.util.*;
 
 public class DayInputController implements Initializable{
 	

@@ -14,6 +14,11 @@ import application.Food;
 import application.User;
 import application.Workout;
 import javafx.stage.Stage;
+import javafx.stage.*;
+import java.time.*;
+import java.util.*;
+import application.*;
+import java.io.*;
 
 public class Model {
 	
