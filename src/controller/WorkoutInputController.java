@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Model;
 import javafx.fxml.*;
 import java.awt.image.*;
@@ -115,6 +116,8 @@ public class WorkoutInputController implements Initializable{
     			e.printStackTrace();
     		}
     		a.show();
+    		Stage stage = (Stage) repTF.getScene().getWindow();
+    	    stage.close();
     	}else {
     		
     		a.setAlertType(AlertType.ERROR);

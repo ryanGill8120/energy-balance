@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Model;
 import javafx.fxml.*;
 import java.awt.*;
@@ -107,7 +108,8 @@ public class FoodInputController implements Initializable{
     			e.printStackTrace();
     		}
     		a.show();
-    		
+    		Stage stage = (Stage) calTF.getScene().getWindow();
+    	    stage.close();
     		//ImageIO.write(img, "jpg", new File("./src/staticFiles/test.png"));
     		
     	}else {
