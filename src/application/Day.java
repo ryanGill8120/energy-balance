@@ -2,10 +2,6 @@ package application;
 
 import java.util.ArrayList;
 
-/**
- * @author ryangill
- *
- */
 public class Day {
 
 	private String date;
@@ -27,6 +23,7 @@ public class Day {
 	 * @return date
 	 * 
 	 */
+
 	public String getDate() {
 		return date;
 	}
@@ -87,6 +84,7 @@ public class Day {
 	 * and determines a positive percentage (int) if the user is gaining weight, more calories consumed
 	 * or loosing weight, more calories burned
 	 */
+
 	public int getEnergyBalance() {
 		double ebDouble = (((double) caloriesConsumed / caloriesBurned) - 1) * 100;
 		return (int) ebDouble;

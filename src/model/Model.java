@@ -14,11 +14,6 @@ import application.Food;
 import application.User;
 import application.Workout;
 import javafx.stage.Stage;
-import javafx.stage.*;
-import java.time.*;
-import java.util.*;
-import application.*;
-import java.io.*;
 
 /**
  * 
@@ -35,13 +30,14 @@ public class Model {
 	
 	//gets system date
 	public static LocalDate today = LocalDate.now();
-	
-	//data structures for Users, Food, Workouts, User History by day (for calendar and graph)
-	
-	//a temporary storage hashMap, used for writing to properties file
+
+	// data structures for Users, Food, Workouts, User History by day (for calendar
+	// and graph)
+
+	// a temporary storage hashMap, used for writing to properties file
 	public static HashMap<String, String> temp = new HashMap<String, String>();
-	
-	//live data structures
+
+	// live data structures
 	public static HashMap<String, String> auth = new HashMap<String, String>();
 	public static HashMap<String, Food> foodMap = new HashMap<String, Food>();
 	public static HashMap<String, Workout> workoutMap = new HashMap<String, Workout>();
@@ -58,7 +54,7 @@ public class Model {
 	public static Properties historyProp = new Properties();
 	public static Properties foodHistoryProp = new Properties();
 	public static Properties workoutHistoryProp = new Properties();
-	
+
 	public static File authFile = new File("auth.properties");
 	public static File foodFile = new File("food.properties");
 	public static File workoutFile = new File("workout.properties");
@@ -66,7 +62,6 @@ public class Model {
 	public static File historyFile = new File("history.properties");
 	public static File foodHistoryFile = new File("foodHistory.properties");
 	public static File workoutHistoryFile = new File("workoutHistory.properties");
-	
 	
 	/**
 	 * @throws IOException
@@ -117,8 +112,8 @@ public class Model {
 			String[] userArr = userProp.get(key).toString().split(",");
 			String userName = userArr[0];
 			String name = userArr[1];
-			double weight = (double)Double.parseDouble(userArr[2]);
-			double height = (double)Double.parseDouble(userArr[3]);
+			double weight = (double) Double.parseDouble(userArr[2]);
+			double height = (double) Double.parseDouble(userArr[3]);
 			LocalDate birthday = LocalDate.parse(userArr[4]);
 			LocalDate lastWeighIn = LocalDate.parse(userArr[5]);
 			String sex = userArr[6];
@@ -136,50 +131,53 @@ public class Model {
 			String name = foodArr[0];
 			String picture = foodArr[1];
 			String servingSize = foodArr[2];
-			int calories = (int)Integer.parseInt(foodArr[3]);
+			int calories = (int) Integer.parseInt(foodArr[3]);
 			Food food = new Food(name, picture, servingSize, calories);
 			foodMap.put(name, food);
 		}
-		
-		//loads workouts
-		for(Object key: workoutProp.stringPropertyNames()) {
+
+		// loads workouts
+		for (Object key : workoutProp.stringPropertyNames()) {
 			String[] workoutArr = workoutProp.get(key).toString().split(",");
 			String name = workoutArr[0];
 			String picture = workoutArr[1];
-			int calories = (int)Integer.parseInt(workoutArr[2]);
-			int repSize = (int)Integer.parseInt(workoutArr[3]);
+			int calories = (int) Integer.parseInt(workoutArr[2]);
+			int repSize = (int) Integer.parseInt(workoutArr[3]);
 			String repName = workoutArr[4];
 			Workout workout = new Workout(name, picture, calories, repSize, repName);
 			workoutMap.put(name, workout);
 		}
-		
-		//loads history (NOT SCALABLE) right now the program will load all data from all users into memory 
-		//at launch, we can implement a saving/loading mechanism so that not all of this would be in memory 
-		//for too long. Also, we only need the last year of data for one user, which can be attained from this
-		//file, but will take up way less space in memory. Realistically, this would be handled by a database
-		//framework like SQL
-		
-		for (Object key: historyProp.stringPropertyNames()) {
+
+		// loads history (NOT SCALABLE) right now the program will load all data from
+		// all users into memory
+		// at launch, we can implement a saving/loading mechanism so that not all of
+		// this would be in memory
+		// for too long. Also, we only need the last year of data for one user, which
+		// can be attained from this
+		// file, but will take up way less space in memory. Realistically, this would be
+		// handled by a database
+		// framework like SQL
+
+		for (Object key : historyProp.stringPropertyNames()) {
 			String[] historyArr = historyProp.get(key).toString().split(",");
 			String date = historyArr[0];
 			String user = historyArr[1];
-			int caloriesConsumed = (int)Integer.parseInt(historyArr[2]);
-			int caloriesBurned = (int)Integer.parseInt(historyArr[3]);
+			int caloriesConsumed = (int) Integer.parseInt(historyArr[2]);
+			int caloriesBurned = (int) Integer.parseInt(historyArr[3]);
 			Day day = new Day(date, user, caloriesConsumed, caloriesBurned);
 			historyMap.put(key.toString(), day);
-			
+
 		}
 		
 		//loads food and workout history csvs to their appropriate hashmaps
 		for (Object key: foodHistoryProp.stringPropertyNames()) {
 			foodHistoryMap.put(key.toString(), foodHistoryProp.get(key).toString());
 		}
-		
-		for (Object key: workoutHistoryProp.stringPropertyNames()) {
+
+		for (Object key : workoutHistoryProp.stringPropertyNames()) {
 			workoutHistoryMap.put(key.toString(), workoutHistoryProp.get(key).toString());
 		}
-		
-		
+
 	}
 	
 	//adder functions for all data structures
@@ -205,61 +203,59 @@ public class Model {
 		
 		//updates hashmap with user object passed, then writes to file
 		userMap.put(user.getUserName(), user);
-		for (Entry<String, User> entry: userMap.entrySet()) {
-    		temp.put(entry.getKey(), entry.getValue().toString());
+		for (Entry<String, User> entry : userMap.entrySet()) {
+			temp.put(entry.getKey(), entry.getValue().toString());
 		}
 		userProp.putAll(temp);
 		temp.clear();
 		userProp.store(userWriter, null);
-		
-		
+
 	}
 	
 	//add food, workout, and day functions all work the same way as addUser(), but with their associeated objects/files
 	public static void addFood(Food food) throws IOException {
-		
-		FileOutputStream writer = new FileOutputStream(foodFile,false);
+
+		FileOutputStream writer = new FileOutputStream(foodFile, false);
 		foodMap.put(food.getName(), food);
-		for (Entry<String, Food> entry: foodMap.entrySet()) {
-    		temp.put(entry.getKey(), entry.getValue().toString());
+		for (Entry<String, Food> entry : foodMap.entrySet()) {
+			temp.put(entry.getKey(), entry.getValue().toString());
 		}
 		foodProp.putAll(temp);
 		temp.clear();
 		foodProp.store(writer, null);
-		
+
 	}
 	
 	//add workout 
 	public static void addWorkout(Workout workout) throws IOException {
-		
-		FileOutputStream writer = new FileOutputStream(workoutFile,false);
+
+		FileOutputStream writer = new FileOutputStream(workoutFile, false);
 		workoutMap.put(workout.getName(), workout);
-		for (Entry<String, Workout> entry: workoutMap.entrySet()) {
-    		temp.put(entry.getKey(), entry.getValue().toString());
+		for (Entry<String, Workout> entry : workoutMap.entrySet()) {
+			temp.put(entry.getKey(), entry.getValue().toString());
 		}
 		workoutProp.putAll(temp);
 		temp.clear();
 		workoutProp.store(writer, null);
-		
+
 	}
 	
 	//add Day
 	public static void addDay(Day day) throws IOException {
-		
+
 		FileOutputStream writer = new FileOutputStream(historyFile, false);
 		historyMap.put((day.getUser() + "," + day.getDate()), day);
-		for (Entry<String, Day> entry: historyMap.entrySet()) {
+		for (Entry<String, Day> entry : historyMap.entrySet()) {
 			temp.put(entry.getKey(), entry.getValue().toString());
 		}
 		historyProp.putAll(temp);
 		temp.clear();
 		historyProp.store(writer, null);
-		
+
 	}
 	
 	//writes the food history for a day, note that the key is a csv string with the user and date
 	public static void addFoodHistory(Day day, String foodHistoryString) throws IOException{
-		
 		FileOutputStream writer = new FileOutputStream(foodHistoryFile, false);
 		foodHistoryMap.put((day.getUser() + "," + day.getDate()), foodHistoryString);
 		foodHistoryProp.putAll(foodHistoryMap);
@@ -268,17 +264,13 @@ public class Model {
 	
 	//writes workout history similar to function addFoodHistory()
 	public static void addWorkoutHistory(Day day, String workoutHistoryString) throws IOException{
-		
 		FileOutputStream writer = new FileOutputStream(workoutHistoryFile, false);
 		workoutHistoryMap.put((day.getUser() + "," + day.getDate()), workoutHistoryString);
 		workoutHistoryProp.putAll(workoutHistoryMap);
 		workoutHistoryProp.store(writer, null);
 	}
 	
-	
-	
 	//search methods
-	
 	
 	/**
 	 * @param username
@@ -312,7 +304,7 @@ public class Model {
 	
 	//checks if a user is in its hashmap
 	public static boolean queryUser(String user) {
-		if(Model.auth.containsKey(user))
+		if (Model.auth.containsKey(user))
 			return false;
 		return true;
 	}
@@ -367,8 +359,5 @@ public class Model {
 			return true;
 		return false;
 	}
-	
-	
-	
 
 }

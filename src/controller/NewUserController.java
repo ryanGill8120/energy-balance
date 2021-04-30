@@ -20,68 +20,79 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.Model;
-import javafx.fxml.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.event.*;
-import java.net.*;
-import java.util.*;
 
 public class NewUserController implements Initializable {
 
 	//FXML variables, some have attached base values (like inches 0 - 11) will be added,
 	//usually on a combo box
+
 	@FXML
 	private ChoiceBox<Integer> feetCB;
+	// A list of options for the feet choice box
 	Integer[] feet = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
+	// FXML ChoiceBox for sex input
 	@FXML
 	private ChoiceBox<String> sexCB;
+	// Sexes for sex choice box
 	String[] sexes = { "Female", "Male" };
 
+	// FXML TextField for name input
 	@FXML
 	private TextField nameTF;
 
+	// FXML Label for status
 	@FXML
 	private Label statusLabel;
 
+	// FXML TextField for username input
 	@FXML
 	private TextField usernameTF;
 
+	// FXML Button for submitting
 	@FXML
 	private Button submitBtn;
 
+	// FXML Button for returning to login
 	@FXML
 	private Button backBtn;
 
+	// FXML PasswordField for password input
 	@FXML
 	private PasswordField firstPW;
 
+	// FXML ChoiceBox for day input
 	@FXML
 	private ChoiceBox<Integer> dayCB;
 
+	// FXML TextField for weight input
 	@FXML
 	private TextField weightTF;
 
+	// FXML ChoiceBox for inches input
 	@FXML
 	private ChoiceBox<Integer> inchesCB;
+	// A list of options for the inches choice box
 	Integer[] inches = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
+	// FXML AnchorPane for the scene
 	@FXML
 	private AnchorPane newUser;
 
+	// FXML PasswordField for confirming password
 	@FXML
 	private PasswordField secondPW;
 
+	// FXML ChoiceBox for month input
 	@FXML
 	private ChoiceBox<String> monthCB;
+	// A list of months for the month choice box
 	String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
 			"October", "November", "December" };
 
+	// FXML ChoiceBox for year input
 	@FXML
 	private ChoiceBox<Integer> yearCB;
-
-	
 	
 	/**
 	 * @param event
@@ -96,8 +107,6 @@ public class NewUserController implements Initializable {
 		newUser.getChildren().setAll(pane);
 
 	}
-
-	
 	
 	/**
 	 *
@@ -143,7 +152,6 @@ public class NewUserController implements Initializable {
 	 */
 	@FXML
 	public void processUser() throws IOException {
-
 		
 		//variables initialized
 		Alert a = new Alert(AlertType.CONFIRMATION);
@@ -168,9 +176,11 @@ public class NewUserController implements Initializable {
 		//error output string created
 		String output = "The following problems exist:\n\n";
 
+		// Create variable for checking birthday format
 		LocalDate birthday = LocalDate.now();
 		
 		//switch for the choosing a month from choice box
+
 		if (validDate) {
 			switch (monthCB.getValue()) {
 			case "January":
@@ -217,6 +227,7 @@ public class NewUserController implements Initializable {
 			try {
 				birthday = LocalDate.of((int) yearCB.getValue(), month, (int) dayCB.getValue());
 			} catch (DateTimeException e) {
+				// If date does not exist, add error to output
 				validDate = false;
 				output += e.getMessage() + "\n\n";
 			}
@@ -229,7 +240,9 @@ public class NewUserController implements Initializable {
 			//loads data and then constructs a User object
 			double weight = (double) Integer.parseInt(weightString);
 			double height = (double) (12 * feetCB.getValue() + inchesCB.getValue());
+			// Get value of sex
 			String sex = sexCB.getValue();
+			// Create User using values
 			User user = new User(username, name, weight, height, birthday, Model.today, sex);
 			
 			//adds the new User to file

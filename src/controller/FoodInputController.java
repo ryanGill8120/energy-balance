@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,15 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Model;
-import javafx.fxml.*;
-import java.awt.*;
-import java.awt.image.*;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
-import javafx.event.*;
-import java.net.*;
-import java.util.*;
 
 /**
  * Food Input window allows user to create a new food for use in their inventory of available foods
@@ -39,6 +31,7 @@ public class FoodInputController implements Initializable{
 	
 	//objects used for file choosing
 	private Desktop desktop = Desktop.getDesktop();
+
 	private BufferedImage buffImage;
 	
     @FXML
@@ -136,11 +129,11 @@ public class FoodInputController implements Initializable{
     			foodImg.setImage(img);
     			
     		} catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
     		a.show();
-    		
+    		Stage stage = (Stage) calTF.getScene().getWindow();
+    	    stage.close();
     		//ImageIO.write(img, "jpg", new File("./src/staticFiles/test.png"));
     	
     	//if even one input is invalid
@@ -180,7 +173,6 @@ public class FoodInputController implements Initializable{
 			foodImg.setImage(img);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

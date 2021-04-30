@@ -9,26 +9,43 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import model.Model;
-import java.time.*;
-import java.util.*;
 
 /**
  * Data structure for the user's information. Note that the username is saved but the password is not.
  *
  */
 public class User {
-	
+
+	// String for user's username.
 	private String userName;
+	// String for user's name.
 	private String name;
+	// Double for user's weight.
 	private double weight;
+	// Double for user's height.
 	private double height;
+	// LocalDate for user's birthday.
 	private LocalDate birthday;
+	// LocalDate for user's last weigh-in.
 	private LocalDate lastWeighIn;
+	// String for user's sex.
 	private String sex;
+	// ArrayList of Days used to store the user's previous history.
 	private ArrayList<Day> userHistory = new ArrayList<Day>();
-	
-	public User(String userName, String name, double weight, double height, LocalDate birthday, LocalDate lastWeighIn, String sex) {
-		
+
+	/**
+	 * User constructor for instanciation.
+	 * 
+	 * @param String    userName: Username of User
+	 * @param String    name: Name of User
+	 * @param double    weight: Weight of User
+	 * @param double    height: Height of User
+	 * @param LocalDate birthday: Birth date of User
+	 * @param LocalDate lastWeighIn: Last time User weighed-in
+	 * @param String    sex: Sex of User
+	 **/
+	public User(String userName, String name, double weight, double height, LocalDate birthday, LocalDate lastWeighIn,
+			String sex) {
 		this.userName = userName;
 		this.name = name;
 		this.weight = weight;
@@ -36,7 +53,6 @@ public class User {
 		this.birthday = birthday;
 		this.lastWeighIn = lastWeighIn;
 		this.sex = sex;
-		
 	}
 	
 	/**
@@ -71,92 +87,140 @@ public class User {
 				userHistory.add(day);
 			}
 		}
-		
+
 	}
 	
 	//getters and setters
+
 	public String getUserName() {
 		return userName;
 	}
 
-
-
+	/**
+	 * Setter for username.
+	 * 
+	 * @param String userName: Username to set.
+	 **/
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-
-
+	/**
+	 * Getter for name.
+	 * 
+	 * @return String name: User's name.
+	 **/
 	public String getName() {
 		return name;
 	}
 
-
-
+	/**
+	 * Setter for name.
+	 * 
+	 * @param String name: Name to set.
+	 **/
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-
+	/**
+	 * Getter for weight.
+	 * 
+	 * @return double weight: User's weight.
+	 **/
 	public double getWeight() {
 		return weight;
 	}
 
-
-
+	/**
+	 * Setter for weight.
+	 * 
+	 * @param double weight: Weight to set.
+	 **/
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
-
-
+	/**
+	 * Getter for height.
+	 * 
+	 * @return double height: User's height.
+	 **/
 	public double getHeight() {
 		return height;
 	}
 
-
-
+	/**
+	 * Setter for height.
+	 * 
+	 * @param double height: Height to set.
+	 **/
 	public void setHeight(double height) {
 		this.height = height;
 	}
 
-
-
+	/**
+	 * Getter for birthday.
+	 * 
+	 * @return LocalDate birthday: User's birthday.
+	 **/
 	public LocalDate getBirthday() {
 		return birthday;
 	}
 
-
-
+	/**
+	 * Setter for birthday.
+	 * 
+	 * @param LocalDate birthday: Birthday to set.
+	 **/
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 
-
-
+	/**
+	 * Getter for sex.
+	 * 
+	 * @return String sex: User's sex.
+	 **/
 	public String getSex() {
 		return sex;
 	}
 
-
-
+	/**
+	 * Setter for sex.
+	 * 
+	 * @param LocalDate birthday: Birthday to set.
+	 **/
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
+
+	/**
+	 * Getter for User's history.
+	 * 
+	 * @return ArrayList<Day> userHistory: User's history.
+	 **/
 	public ArrayList<Day> getUserHistory() {
 		return userHistory;
 	}
-	
+
+	/**
+	 * Getter for User's last weigh-in.
+	 * 
+	 * @return LocalDate lastWeighIn: User's last weigh-in.
+	 **/
 	public LocalDate getLastWeighIn() {
 		return lastWeighIn;
 	}
 
+	/**
+	 * Setter for User's last weigh-in.
+	 * 
+	 * @param LocalDate lastWeighIn: Weigh-in date to set.
+	 **/
 	public void setLastWeighIn(LocalDate lastWeighIn) {
 		this.lastWeighIn = lastWeighIn;
 	}
-
 	
 	/**
 	 * @return basalMetabolism - int
@@ -164,11 +228,14 @@ public class User {
 	 * Calculates the user's basal metabolism based on the nutrition equation. This number is the calories
 	 * one burns even at rest, and will change based on the person's age, sex, height and weight
 	 */
+
 	public int getBasalMetabolism() {
-		
+
+		// Get time between user's birthday and today
 		Period period = Period.between(birthday, Model.today);
 		int age = period.getYears();
 		int basalMetabolism = 0;
+		// Calculate basal metabolism based off gender
 		if (sex.equals("Male")) {
 			
 			//formula for males
@@ -182,21 +249,24 @@ public class User {
 	}
 	
 	//Returns a specified day from the user's history based on the LocalDate object passed
+
 	public Day getDay(LocalDate date) {
-		
-		for (Day day: userHistory) {
+		for (Day day : userHistory) {
 			if (day.getDate().equals(date.toString()))
 				return day;
 		}
 		return null;
-		
 	}
-	
-	
+
+	/**
+	 * toString for the User.
+	 * 
+	 * @return String string: String format for user.
+	 **/
 	@Override
 	public String toString() {
-		return userName + "," + name + "," + weight + "," + height + "," + birthday.toString() + "," + lastWeighIn.toString()+ "," + sex;
+		return userName + "," + name + "," + weight + "," + height + "," + birthday.toString() + ","
+				+ lastWeighIn.toString() + "," + sex;
 	}
-	
-	
+
 }

@@ -20,13 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Model;
-import javafx.fxml.*;
-import javafx.scene.control.*;
-import javafx.scene.chart.*;
-import javafx.scene.layout.*;
-import javafx.event.*;
-import java.net.*;
-import java.util.*;
 
 public class DashController implements Initializable{
 	
