@@ -23,7 +23,9 @@ import model.Model;
 
 public class NewUserController implements Initializable {
 
-	// FXML ChoiceBox for feet input
+	//FXML variables, some have attached base values (like inches 0 - 11) will be added,
+	//usually on a combo box
+
 	@FXML
 	private ChoiceBox<Integer> feetCB;
 	// A list of options for the feet choice box
@@ -91,12 +93,12 @@ public class NewUserController implements Initializable {
 	// FXML ChoiceBox for year input
 	@FXML
 	private ChoiceBox<Integer> yearCB;
-
+	
 	/**
-	 * FXML onAction for the back button. Returns to login.
-	 * 
-	 * @param ActionEvent event
+	 * @param event
 	 * @throws IOException
+	 * 
+	 * takes the user to the Login screen (back button)
 	 */
 	@FXML
 	void toLogin(ActionEvent event) throws IOException {
@@ -105,10 +107,11 @@ public class NewUserController implements Initializable {
 		newUser.getChildren().setAll(pane);
 
 	}
-
+	
 	/**
-	 * Initialize function for the controller. Is called by javafx when the scene is
-	 * set. Populates the choice boxes.
+	 *
+	 *Sets CHoiceBoxes to their pre-assigned values
+	 *
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -122,11 +125,7 @@ public class NewUserController implements Initializable {
 
 	}
 
-	/**
-	 * Populates an array of days of the month and returns it.
-	 * 
-	 * @return Integer[] days: Integer array full of days of the month.
-	 */
+	//helper function to create list of available values for days 1 - 31
 	public Integer[] populateDays() {
 		Integer[] days = new Integer[31];
 		for (int i = 0; i < 31; i++) {
@@ -136,11 +135,7 @@ public class NewUserController implements Initializable {
 
 	}
 
-	/**
-	 * Populates an array of years and returns it.
-	 * 
-	 * @return Integer[] years: Integer array full of years.
-	 */
+	//helper function to create a list of valid years, goes back 100 years, used for choosing age.
 	public Integer[] populateYears() {
 		Integer[] years = new Integer[100];
 		Integer thisYear = (Integer) Model.today.getYear();
@@ -151,14 +146,14 @@ public class NewUserController implements Initializable {
 	}
 
 	/**
-	 * FXML Method that processes user creation button.
-	 * 
 	 * @throws IOException
+	 * 
+	 * Handles error checking of input values and then adds a user to file if all input is valid
 	 */
 	@FXML
 	public void processUser() throws IOException {
-
-		// Create alert object and get values from all input components
+		
+		//variables initialized
 		Alert a = new Alert(AlertType.CONFIRMATION);
 		String name = nameTF.getText();
 		String username = usernameTF.getText();
@@ -167,7 +162,7 @@ public class NewUserController implements Initializable {
 		String weightString = weightTF.getText();
 		int month = 1;
 
-		// Check whether each mode of input is valid
+		//validity flags, each has an associated validation method unique to the needed bounds
 		boolean validName = Model.validateName(name);
 		boolean validUserName = Model.validateUsername(username);
 		boolean novelUserName = Model.queryUser(username);
@@ -178,13 +173,14 @@ public class NewUserController implements Initializable {
 		boolean validSex = sexCB.getValue() != null;
 		boolean validDate = yearCB.getValue() != null && monthCB.getValue() != null && dayCB.getValue() != null;
 
-		// Create string for error message
+		//error output string created
 		String output = "The following problems exist:\n\n";
 
 		// Create variable for checking birthday format
 		LocalDate birthday = LocalDate.now();
+		
+		//switch for the choosing a month from choice box
 
-		// If the date is valid, convert month string to integer
 		if (validDate) {
 			switch (monthCB.getValue()) {
 			case "January":
@@ -226,8 +222,8 @@ public class NewUserController implements Initializable {
 			default:
 				break;
 			}
-
-			// Check whether date exists
+			
+			//checks for a valid birthday date
 			try {
 				birthday = LocalDate.of((int) yearCB.getValue(), month, (int) dayCB.getValue());
 			} catch (DateTimeException e) {
@@ -236,21 +232,23 @@ public class NewUserController implements Initializable {
 				output += e.getMessage() + "\n\n";
 			}
 		}
-
-		// If all conditions passed check
+		
+		//Main Condition, all must be true
 		if (validName && validUserName && validPassword && validPasswordMatch && validHeight && validWeight && validSex
 				&& validDate && novelUserName) {
-			// Get double values of weight and height
+
+			//loads data and then constructs a User object
 			double weight = (double) Integer.parseInt(weightString);
 			double height = (double) (12 * feetCB.getValue() + inchesCB.getValue());
 			// Get value of sex
 			String sex = sexCB.getValue();
 			// Create User using values
 			User user = new User(username, name, weight, height, birthday, Model.today, sex);
-			// Add the new user
+			
+			//adds the new User to file
 			Model.addUser(user, firstPWString);
 
-			// Clear all fields
+			//cleans up screen, and preps alert
 			nameTF.clear();
 			usernameTF.clear();
 			firstPW.clear();
@@ -261,50 +259,67 @@ public class NewUserController implements Initializable {
 			dayCB.setValue(null);
 			feetCB.setValue(null);
 			inchesCB.setValue(null);
-
-			// Send message indicating success
 			a.setHeaderText("User Account Created");
 			a.setContentText("Thank you " + name + " for signing up! Please Log In.");
 			a.show();
-			// Set scene to login
+			
+			//takes the user to the Dash Screen
 			AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			newUser.getChildren().setAll(pane);
 
-			// If any checks failed
+		//at least one invalid input occured, each error will add a problem to the output alert string
 		} else {
-			// Add appropriate message for each error
+			
+			//invalid Name
 			if (!validName) {
 				nameTF.setStyle("-fx-text-inner-color: red;");
 				output += "Name must be under 30 characters and contain only letters.\n";
 			}
+			
+			//invalid username
 			if (!validUserName) {
 				usernameTF.setStyle("-fx-text-inner-color: red;");
 				output += "Username must be under 30 characters and contain only letters and numbers.\n";
 			}
+			
+			//invalid password
 			if (!validPassword) {
 				output += "Password must be 6-20 characters long.\n";
 			}
+			
+			//Passwords do not match
 			if (!validPasswordMatch) {
 				output += "Passwords entered do not match.\n";
 			}
+			
+			//An invalid date was chosen for users birthday. IE, 4/31/1990
 			if (!validDate) {
 				output += "Please enter a valid date.\n";
 			}
+			
+			//User did not choose height
 			if (!validHeight) {
 				output += "Please enter your height.\n";
 			}
+			
+			//User did not choose sex
 			if (!validSex) {
 				output += "Please enter your sex.\n";
 			}
+			
+			//invalid weight
 			if (!validWeight) {
 				weightTF.setStyle("-fx-text-inner-color: red;");
 				output += "Weight must be an integer less than or equal to 1,000.\n";
 			}
+			
+			//username chosen already exists
 			if (!novelUserName) {
 				usernameTF.setStyle("-fx-text-inner-color: red;");
 				output += "Username \"" + username + "\"already exists.\n";
 			}
-			// Send alert with full error message
+			
+			//shows error alert
 			a.setAlertType(AlertType.ERROR);
 			a.setHeaderText("Invalid Input");
 			a.setContentText(output);

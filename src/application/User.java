@@ -10,6 +10,10 @@ import java.util.stream.IntStream;
 
 import model.Model;
 
+/**
+ * Data structure for the user's information. Note that the username is saved but the password is not.
+ *
+ */
 public class User {
 
 	// String for user's username.
@@ -50,44 +54,44 @@ public class User {
 		this.lastWeighIn = lastWeighIn;
 		this.sex = sex;
 	}
-
+	
 	/**
-	 * Method that is called when user is created. Used to populate a user's history
-	 * from historyMap in Model.
-	 **/
+	 * Populates the user's history for the last year. Note, if a corresponding day is not present in the properties file, 
+	 * the function will assign a 'blank day' where it is assumed the user burned their basal metabolism and consumed just
+	 * as much. This way, the graph will be more readable when it uses this information. The user can update past days anytime
+	 * in the Nutrition Manager 
+	 */
 	public void populateUserHistory() {
-		// Clear existing data
-		userHistory.clear();
-		// Get date of one year ago
-		LocalDate yearAgo = LocalDate.of(Model.today.getYear() - 1, Model.today.getMonthValue(),
-				Model.today.getDayOfMonth());
-		// Calculate the number of days between a year ago and today
+		
+		userHistory.clear(); //resets the arrayList
+		
+		//creates a LocalDate object equal to one year ago
+		LocalDate yearAgo = LocalDate.of(Model.today.getYear()-1, Model.today.getMonthValue(), Model.today.getDayOfMonth());
 		long numOfDaysBetween = ChronoUnit.DAYS.between(yearAgo, Model.today);
-		// Populate a list of dates with each day of the last year
+		
+		//populates an ArrayList with all of the days between today and a year ago
 		List<LocalDate> dateList = new ArrayList<LocalDate>();
-		dateList = IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(i -> yearAgo.plusDays(i))
-				.collect(Collectors.toList());
-		// Add today
-		dateList.add(Model.today);
-		// For each day of the last year, search for user entries in historyMap
-		for (LocalDate date : dateList) {
-			// If user entry for given day is found, add it to User's history
-			if (Model.historyMap.containsKey(userName + "," + date.toString())) {
+		dateList = IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(i -> yearAgo.plusDays(i)).collect(Collectors.toList());
+		dateList.add(Model.today); //adds the current day too
+		
+		//iterates over entire list to create objects if they are found in the user's history
+		for (LocalDate date: dateList) {
+			
+			//the day is present in history, get object from hashmap and add it to ArrayList
+			if (Model.historyMap.containsKey(userName + "," + date.toString())){
 				userHistory.add(Model.historyMap.get(userName + "," + date.toString()));
-				// Otherwise, initialize day to base value
-			} else {
+				
+			//day is not present, make blank Day and add it to the ArrayList
+			}else {
 				Day day = new Day(date.toString(), userName, getBasalMetabolism(), getBasalMetabolism());
 				userHistory.add(day);
 			}
 		}
 
 	}
+	
+	//getters and setters
 
-	/**
-	 * Getter for username.
-	 * 
-	 * @return String userName: User's username.
-	 **/
 	public String getUserName() {
 		return userName;
 	}
@@ -217,12 +221,14 @@ public class User {
 	public void setLastWeighIn(LocalDate lastWeighIn) {
 		this.lastWeighIn = lastWeighIn;
 	}
-
+	
 	/**
-	 * Calculates user's basal metabolism and returns it.
+	 * @return basalMetabolism - int
 	 * 
-	 * @return int basalMetabolism: User's basal metabolism.
-	 **/
+	 * Calculates the user's basal metabolism based on the nutrition equation. This number is the calories
+	 * one burns even at rest, and will change based on the person's age, sex, height and weight
+	 */
+
 	public int getBasalMetabolism() {
 
 		// Get time between user's birthday and today
@@ -231,19 +237,19 @@ public class User {
 		int basalMetabolism = 0;
 		// Calculate basal metabolism based off gender
 		if (sex.equals("Male")) {
-			basalMetabolism = (int) (66.47 + (6.24 * weight) + (12.7 * height) - (6.755 * age));
-		} else {
-			basalMetabolism = (int) (655.1 + (4.35 * weight) + (4.7 * height) - (4.7 * age));
+			
+			//formula for males
+			basalMetabolism = (int)(66.47 + (6.24 * weight) + (12.7 * height) - (6.755 * age));
+		}else {
+			
+			//formula for females
+			basalMetabolism = (int)(655.1 + (4.35 * weight) + (4.7 * height) - (4.7 * age));
 		}
 		return basalMetabolism;
 	}
+	
+	//Returns a specified day from the user's history based on the LocalDate object passed
 
-	/**
-	 * Gets a given in the user's history.
-	 * 
-	 * @param LocalDate date: Date to search for
-	 * @return Day day: Day found in user's history. Null if not found.
-	 **/
 	public Day getDay(LocalDate date) {
 		for (Day day : userHistory) {
 			if (day.getDate().equals(date.toString()))

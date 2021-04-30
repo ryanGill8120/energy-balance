@@ -1,5 +1,9 @@
 package application;
 
+/**
+ * Data structure to hold workout information
+ *
+ */
 public class Workout {
 
 	private String name;
@@ -15,6 +19,8 @@ public class Workout {
 		this.repSize = repSize;
 		this.repName = repName;
 	}
+	
+	//getters and setters
 
 	public String getName() {
 		return name;

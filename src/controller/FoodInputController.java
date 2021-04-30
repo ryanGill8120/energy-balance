@@ -23,9 +23,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
 
+/**
+ * Food Input window allows user to create a new food for use in their inventory of available foods
+ *
+ */
 public class FoodInputController implements Initializable{
 	
-//	private Desktop desktop = Desktop.getDesktop();
+	//objects used for file choosing
+	private Desktop desktop = Desktop.getDesktop();
+
 	private BufferedImage buffImage;
 	
     @FXML
@@ -43,9 +49,16 @@ public class FoodInputController implements Initializable{
     @FXML
     private ImageView foodImg;
     
+    /**
+     * @param event
+     * @throws IOException
+     * 
+     * Allows user to choose a food picture from their machine
+     */
     @FXML
     void chooseFoodPic(ActionEvent event) throws IOException {
     	
+    	//set up fileChooser to only look for images
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Food Picture");
     	fileChooser.getExtensionFilters().addAll(
@@ -53,7 +66,11 @@ public class FoodInputController implements Initializable{
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
             );
+    	
+    	//displays the file chooser
     	File foodFile = fileChooser.showOpenDialog(Model.foodStage);
+    	
+    	//sets an instance variable to a usable form of the picture selected, and updates the imageView
     	if(foodFile != null) {
     		buffImage = ImageIO.read(foodFile);
     		Image img = SwingFXUtils.toFXImage(buffImage, null);
@@ -64,31 +81,48 @@ public class FoodInputController implements Initializable{
 
     }
     
+    /**
+     * @param event
+     * @throws IOException
+     * 
+     * handles the addition of the food assuming all input is valid
+     */
     @FXML
     void process(ActionEvent event) throws IOException {
     	
+    	//gets data from controllers
     	String name = nameTF.getText();
     	String servingSize = servingSizeTF.getText();
     	String calories = calTF.getText();
     	
+    	//flags to determine if input is valid
     	boolean validName = Model.validateString(name);
     	boolean validServingSize = Model.validateString(servingSize);
     	boolean validCalories = Model.validateInt(calories);
     	
+    	//if all input is valid
     	Alert a = new Alert(AlertType.CONFIRMATION);
     	if (validName && validServingSize && validCalories) {
     		
+    		//constructs food object based on user input
     		String pic = nameTF.getText() + ".png";
     		Food food = new Food(name, pic, servingSize, (int)Integer.parseInt(calories));
     		Model.addFood(food);
+    		
+    		//clears input fields
     		calTF.clear();
     		nameTF.clear();
     		servingSizeTF.clear();
-    		String path = "./src/staticFiles/" + pic;
     		
+    		//makes a string literal for the path, then writes the picture
+    		String path = "./src/staticFiles/" + pic;
     		ImageIO.write(buffImage, "jpg", new File(path));
+    		
+    		//sets popup text
     		a.setHeaderText("Food added succesfully");
     		a.setContentText("You have added " + name + " to your list of available foods.");
+    		
+    		//resets food image
     		try {
     			buffImage = ImageIO.read(new File("./src/staticFiles/NoFood.png"));
     			Image img = SwingFXUtils.toFXImage(buffImage, null);
@@ -101,11 +135,14 @@ public class FoodInputController implements Initializable{
     		Stage stage = (Stage) calTF.getScene().getWindow();
     	    stage.close();
     		//ImageIO.write(img, "jpg", new File("./src/staticFiles/test.png"));
-    		
+    	
+    	//if even one input is invalid
     	}else {
     		a.setAlertType(AlertType.ERROR);
     		a.setHeaderText("Invalid Input");
     		String output = "The following problems exist:\n\n";
+    		
+    		//displays the errors present in a popup and changes the color of the input fields that are invalid
     		if (!validName) {
     			nameTF.setStyle("-fx-text-inner-color: red;");
     			output += "Name must be under 30 characters and cannot contain ','\n\n";
@@ -129,6 +166,7 @@ public class FoodInputController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		//loads default food image at window open
 		try {
 			buffImage = ImageIO.read(new File("./src/staticFiles/NoFood.png"));
 			Image img = SwingFXUtils.toFXImage(buffImage, null);
