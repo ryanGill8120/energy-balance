@@ -7,10 +7,11 @@
     Spring 2021
   </div>
   <div class="col-4 float-right border p-4">
-    Created by: @arduino731, @ryanGill8120, @judenelson468
+    Created by: @arduino731 (Brian van Vlymen), @ryanGill8120 (Ryan Gill), @judenelson468 (Jude Nelson)
   </div>
 </div>
 
+<p align="center"> Group 4 </p>
 <h1 align="center"> Energy Balance</h1>
  <h2 align="center"> A Nutrition Applicaion </h1>
   
@@ -35,6 +36,8 @@ Understanding the relationship between the calories you burn and calories you co
 - Download IDE Eclipse that is right for you (https://www.eclipse.org/downloads/)
 - [Configure JAVAFX](#configureJAVAFX) - Install the Eclipse JavaFX plugin Version (1.2.0) - (https://download.eclipse.org/efxclipse/updates-released/)
 - [SceneBuilder](#sceneBuilder) - If Scenebuilder is not installed: Please install SceneBuider: Download the installer Version (2.0) (https://www.oracle.com/java/technologies/javafxscenebuilder-1x-archive-downloads.html)  
+- temporary username and password: tom123/test
+- included UML diagram for the project
 
 ## Configure JAVAFX:
 1. create a new project on eclipse.
