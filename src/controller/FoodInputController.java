@@ -30,7 +30,7 @@ import model.Model;
 public class FoodInputController implements Initializable{
 	
 	//objects used for file choosing
-	private Desktop desktop = Desktop.getDesktop();
+	
 
 	private BufferedImage buffImage;
 	
